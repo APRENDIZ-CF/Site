@@ -764,3 +764,33 @@ h4 { font-size: 1.35rem; }
 .booking-form-wrap .booking__form { border-top: 0; padding-top: 0; }
 .booking-form__head { margin-bottom: clamp(24px, 3vw, 40px); }
 .booking-form__head h2 { margin: 0; }
+
+/* ---------- 29. Contactos compactos ---------- */
+.contact-section { padding-top: clamp(32px, 4vw, 56px); }
+.contact-cards { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: clamp(32px, 4vw, 52px); }
+@media (min-width: 600px) { .contact-cards { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .contact-cards { grid-template-columns: repeat(4, 1fr); } }
+.contact-cards a {
+  height: 100%; display: grid; grid-template-columns: 40px 1fr; grid-template-rows: auto auto; column-gap: 14px; align-items: center;
+  padding: 20px 22px; background: var(--offwhite); border: 1px solid var(--line); transition: background .3s, border-color .3s;
+}
+.contact-cards a:hover { background: #fff; border-color: var(--green); }
+.contact-cards svg { grid-row: 1 / 3; width: 40px; height: 40px; padding: 9px; border-radius: 50%; background: var(--green); color: #fff; stroke-width: 1.5; }
+.contact-cards .k { font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.contact-cards .v { font-family: var(--serif); font-size: 1.15rem; line-height: 1.3; color: var(--green); overflow-wrap: anywhere; }
+.contact-grid { row-gap: 40px; align-items: start; }
+.contact-form { grid-column: 1 / -1; }
+.contact-form h2 { font-size: clamp(1.9rem, 3vw, 2.6rem); margin-bottom: 24px; }
+.contact-form .form { gap: 20px 28px; }
+.contact-aside { grid-column: 1 / -1; }
+@media (min-width: 900px) {
+  .contact-form { grid-column: 1 / 8; }
+  .contact-aside { grid-column: 8 / 13; position: sticky; top: 100px; }
+}
+.map-card { border: 1px solid var(--line); background: #fff; }
+.map-card .map { display: block; width: 100%; aspect-ratio: 4 / 3; filter: none; border: 0; }
+.map-card__body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 14px; }
+.map-card__addr { display: flex; gap: 10px; margin: 0; font-size: .95rem; color: var(--text); line-height: 1.5; }
+.map-card__addr svg { width: 20px; height: 20px; color: var(--orange); flex-shrink: 0; margin-top: 2px; }
+.map-card .btn { align-self: flex-start; }
+.hours__title { font-size: 1.5rem; margin: 28px 0 6px; }

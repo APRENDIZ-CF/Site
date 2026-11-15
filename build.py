@@ -37,7 +37,8 @@ SITE = {
     "whatsapp": "244923353534",                   # só dígitos, com indicativo
     "email": "jdsaprendiz@gmail.com",
     "address": "Rua Cónego Manuel das Neves, Prédio 5, Porta 9 – Kinaxixi, Luanda",
-    "map_query": "Rua%20C%C3%B3nego%20Manuel%20das%20Neves%2C%20Kinaxixi%2C%20Luanda%2C%20Angola",
+    "map_query": "-8.8152712,13.2409689",
+    "map_link": "https://www.google.com/maps/dir/?api=1&amp;destination=-8.8152712%2C13.2409689",
 }
 
 NAV = [
@@ -87,6 +88,10 @@ ICONS = {
     "monitor": '<rect x="3" y="4" width="18" height="12"/><path d="M8 20h8M12 16v4"/>',
     "people": '<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 14.2A5 5 0 0 1 21 19"/>',
     "calendar": '<rect x="3.5" y="5" width="17" height="15.5" rx="1.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M7.5 13.5h2M11 13.5h2M14.5 13.5h2M7.5 17h2M11 17h2"/>',
+    "phone": '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
+    "chat": '<path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10h6M9 13.5h4"/>',
+    "mail": '<rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3.5 6l8.5 7 8.5-7"/>',
+    "route": '<circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H16a3 3 0 0 0 0-6H8a3 3 0 0 1 0-6h7.5"/>',
     "coffee": '<path d="M4 8h13v5a6 6 0 0 1-6 6h-1a6 6 0 0 1-6-6z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17M7 3v2M11 3v2M15 3v2"/>',
 }
 
