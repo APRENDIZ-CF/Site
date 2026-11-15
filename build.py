@@ -32,7 +32,7 @@ SRC = ROOT / "src"
 # ---------------------------------------------------------------------------
 SITE = {
     "url": "https://aprendiz2021.com",         # domínio final (para Open Graph)
-    "phone": "+244 923 353 534",
+    "phone": "+244 923 35 35 34",
     "phone_link": "+244923353534",
     "whatsapp": "244923353534",                   # só dígitos, com indicativo
     "email": "jdsaprendiz@gmail.com",

@@ -145,7 +145,7 @@
         data.pagina = document.title;
         fetch(endpoint, { method: "POST", body: JSON.stringify(data), headers: { "Content-Type": "application/json", Accept: "application/json" } })
           .then(function (r) { if (!r.ok) throw new Error(); form.reset(); done(success); })
-          .catch(function () { done("Não foi possível enviar o pedido. Tente novamente ou contacte-nos pelo WhatsApp/telefone +244 923 353 534."); });
+          .catch(function () { done("Não foi possível enviar o pedido. Tente novamente ou contacte-nos pelo WhatsApp/telefone +244 923 35 35 34."); });
       } else {
         form.reset();
         done(success);

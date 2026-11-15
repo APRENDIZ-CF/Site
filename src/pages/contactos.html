@@ -17,9 +17,17 @@ hero: false
 <section class="section contact-section" id="formulario">
   <div class="container">
     <ul class="contact-cards reveal">
-      <li><a href="tel:{{phone_link}}">[[icon:phone]]<span class="k">Telefone</span><span class="v">{{phone}}</span></a></li>
-      <li><a href="https://wa.me/{{whatsapp}}" target="_blank" rel="noopener">[[icon:chat]]<span class="k">WhatsApp</span><span class="v">{{phone}}</span></a></li>
-      <li><a href="mailto:{{email}}">[[icon:mail]]<span class="k">E-mail</span><span class="v">{{email}}</span></a></li>
+      <li class="contact-cards__main">
+        <div class="contact-cards__box">
+          [[icon:phone]]<span class="k">Telefone / WhatsApp</span>
+          <a class="v v--big" href="tel:{{phone_link}}">{{phone}}</a>
+          <span class="contact-cards__actions">
+            <a href="tel:{{phone_link}}">Ligar</a>
+            <a href="https://wa.me/{{whatsapp}}" target="_blank" rel="noopener">WhatsApp</a>
+          </span>
+        </div>
+      </li>
+      <li><a href="mailto:{{email}}">[[icon:mail]]<span class="k">E-mail</span><span class="v v--big">{{email}}</span></a></li>
       <li><a href="{{map_link}}" target="_blank" rel="noopener">[[icon:pin]]<span class="k">Morada</span><span class="v">{{address}}</span></a></li>
     </ul>
 
