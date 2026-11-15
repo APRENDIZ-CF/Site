@@ -127,6 +127,12 @@ def photo(name, alt, sizes="100vw", eager=False):
             f'sizes="{sizes}" alt="{alt}" width="1600" height="1067" {loading}>')
 
 
+def asset_version(rel):
+    """Hash curto do ficheiro, para o browser descarregar sempre a versão nova."""
+    import hashlib
+    return hashlib.md5((ROOT / rel).read_bytes()).hexdigest()[:10]
+
+
 def render_tokens(html):
     html = re.sub(r"\[\[icon:([a-z]+)(?:\|([^\]]+))?\]\]", lambda m: icon(m.group(1), m.group(2) or ""), html)
 
@@ -140,6 +146,8 @@ def render_tokens(html):
     for k, v in SITE.items():
         html = html.replace("{{" + k + "}}", v)
     html = html.replace("{{wa_path}}", WA_PATH)
+    for rel in ("assets/css/style.css", "assets/js/main.js", "assets/js/booking.js"):
+        html = html.replace(f'"{rel}"', f'"{rel}?v={asset_version(rel)}"')
     return html
 
 
