@@ -91,8 +91,8 @@ h4 { font-size: 1.35rem; }
 /* ---------- 4. Tipografia utilitária ---------- */
 .eyebrow {
   display: inline-flex; align-items: center; gap: 14px;
-  font-family: var(--sans); font-weight: 500; font-size: .75rem;
-  letter-spacing: .28em; text-transform: uppercase; color: var(--green);
+  font-family: var(--sans); font-weight: 500; font-size: .85rem;
+  letter-spacing: .26em; text-transform: uppercase; color: var(--green);
   margin-bottom: 28px;
 }
 .eyebrow::before { content: ""; width: 40px; height: 1px; background: var(--orange); }
@@ -104,7 +104,7 @@ h4 { font-size: 1.35rem; }
 
 .sec-num {
   display: block; font-family: var(--serif); font-weight: 400;
-  font-size: clamp(4rem, 8vw, 7.5rem); line-height: .9;
+  font-size: clamp(5.5rem, 11vw, 10rem); line-height: .85;
   color: var(--orange); opacity: .9; margin-bottom: 18px;
   font-variant-numeric: lining-nums;
 }
@@ -267,11 +267,11 @@ h4 { font-size: 1.35rem; }
 @keyframes cue { to { top: 100%; } }
 
 /* Cabeçalho de páginas internas */
-.page-hero { padding: calc(76px + clamp(80px, 10vw, 140px)) 0 clamp(56px, 7vw, 96px); border-bottom: 1px solid var(--line); }
+.page-hero { padding: calc(76px + clamp(28px, 3.5vw, 52px)) 0 clamp(36px, 4.5vw, 64px); border-bottom: 1px solid var(--line); }
 .page-hero .grid-12 { align-items: end; row-gap: 28px; }
 .page-hero h1 { grid-column: 1 / -1; margin: 0; }
 .page-hero .lead { grid-column: 1 / -1; margin: 0; color: var(--muted); }
-.breadcrumb { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 32px; }
+.breadcrumb { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
 .breadcrumb a:hover { color: var(--orange-dark); }
 .breadcrumb span[aria-hidden] { margin: 0 10px; color: var(--orange); }
 @media (min-width: 900px) {
@@ -298,7 +298,7 @@ h4 { font-size: 1.35rem; }
 .stats li { padding: 44px 20px; border-right: 1px solid var(--line); border-top: 1px solid var(--line); }
 .stats li:nth-child(2n) { border-right: 0; }
 .stats li:nth-child(-n+2) { border-top: 0; }
-.stats strong { display: block; font-family: var(--serif); font-weight: 400; font-size: clamp(2.4rem, 4vw, 3.6rem); color: var(--green); line-height: 1; margin-bottom: 14px; }
+.stats strong { display: block; font-family: var(--serif); font-weight: 400; font-size: clamp(1.9rem, 3.4vw, 3.2rem); color: var(--green); line-height: 1; margin-bottom: 14px; }
 .stats strong em { font-style: normal; color: var(--orange); }
 .stats span { font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
 @media (min-width: 900px) {
@@ -581,3 +581,130 @@ h4 { font-size: 1.35rem; }
 @media (max-width: 599px) { .brand img { height: 56px; } .site-header.is-solid .brand img, .site-header.no-hero .brand img { height: 48px; } }
 .spaces .figure--main img { object-position: 50% 45%; }
 .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ---------- 23. Logótipos e níveis das formações ---------- */
+.course__top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 26px; }
+.course__top .course__cat { margin-bottom: 0; text-align: right; }
+.course__logo { width: 56px; height: 56px; object-fit: contain; flex-shrink: 0; }
+.course > .course__cat + .course__logo { margin: -6px 0 22px; }
+.course__opts-label { font-size: .7rem !important; letter-spacing: .2em; text-transform: uppercase; color: var(--green) !important; font-weight: 500; margin: 0 0 6px; flex-grow: 0 !important; }
+.course__opts { border-top: 1px solid var(--line); }
+.course__opts a {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid var(--line); font-size: .95rem; color: var(--green);
+  transition: color .3s, padding .3s var(--ease);
+}
+.course__opts a svg { width: 22px; height: 9px; color: var(--orange); flex-shrink: 0; transition: transform .3s var(--ease); }
+.course__opts a:hover { color: var(--orange-dark); padding-left: 6px; }
+.course__opts a:hover svg { transform: translateX(4px); }
+
+/* ---------- 24. Consultoria: blocos com fotografia ---------- */
+.svc-index { border-bottom: 1px solid var(--line); background: #fff; position: sticky; top: 76px; z-index: 50; }
+.svc-index ul { display: flex; gap: 8px 36px; overflow-x: auto; padding: 18px 0; scrollbar-width: none; }
+.svc-index a { display: inline-flex; gap: 10px; white-space: nowrap; font-size: .82rem; letter-spacing: .08em; color: var(--green); }
+.svc-index a span { color: var(--orange-dark); font-weight: 500; }
+.svc-index a:hover { color: var(--orange-dark); }
+.svc-feature { row-gap: 36px; align-items: center; scroll-margin-top: 150px; }
+.svc-feature + .svc-feature { margin-top: clamp(80px, 10vw, 150px); }
+.svc-feature__media { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
+.svc-feature__text { grid-column: 1 / -1; }
+.svc-feature__text h2 { font-size: clamp(2.2rem, 3.8vw, 3.4rem); }
+.svc-feature__label { font-family: var(--sans); font-size: .74rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 500; color: var(--green); margin: 32px 0 14px; }
+.svc-feature .ticks { margin-bottom: 36px; }
+@media (min-width: 900px) {
+  .svc-feature__media { grid-column: 1 / 7; aspect-ratio: 5 / 6; }
+  .svc-feature__text { grid-column: 8 / 13; }
+  .svc-feature--rev .svc-feature__media { grid-column: 7 / 13; grid-row: 1; }
+  .svc-feature--rev .svc-feature__text { grid-column: 1 / 6; grid-row: 1; }
+}
+
+/* ---------- 25. Sala: fotografia completa e preços ---------- */
+.room__grid { row-gap: 48px; align-items: center; }
+.room__photo { grid-column: 1 / -1; aspect-ratio: auto; }
+.room__photo img { height: auto; object-fit: contain; }
+.room__text { grid-column: 1 / -1; }
+@media (min-width: 900px) {
+  .room__photo { grid-column: 1 / 6; }
+  .room__text { grid-column: 7 / 13; }
+}
+.amenities--compact { grid-template-columns: repeat(2, 1fr); margin-top: 36px; }
+.amenities--compact li { padding: 22px 12px 22px 0; }
+.amenities--compact svg { width: 28px; height: 28px; margin-bottom: 10px; }
+.amenities--compact strong { font-size: 1.2rem; }
+@media (min-width: 900px) { .amenities--compact { grid-template-columns: repeat(3, 1fr); } }
+
+.prices { display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media (min-width: 760px) { .prices { grid-template-columns: repeat(3, 1fr); gap: 28px; } }
+.price { background: #fff; border: 1px solid var(--line); padding: 40px 32px; display: flex; flex-direction: column; }
+.price__day { font-family: var(--serif); font-size: 2rem; color: var(--green); line-height: 1.1; }
+.price__sub { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 6px 0 28px; }
+.price__value { margin: 0; padding-top: 24px; border-top: 1px solid var(--line); font-family: var(--serif); font-size: clamp(2.6rem, 4vw, 3.4rem); line-height: 1; color: var(--orange-dark); }
+.price__value small { font-family: var(--sans); font-size: .9rem; color: var(--muted); letter-spacing: .04em; }
+
+/* ---------- 26. Calendário de reservas ---------- */
+.booking { display: grid; grid-template-columns: 1fr; gap: 32px; margin-bottom: 56px; }
+@media (min-width: 980px) { .booking { grid-template-columns: 1.05fr 1fr; gap: 48px; } }
+.booking__cal, .booking__slots { border: 1px solid var(--line); padding: 24px; background: #fff; }
+@media (min-width: 640px) { .booking__cal, .booking__slots { padding: 32px; } }
+.cal__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.cal__title { margin: 0; font-size: 1.7rem; text-transform: capitalize; }
+.cal__nav { width: 44px; height: 44px; border: 1px solid var(--line); background: transparent; font-size: 1.4rem; color: var(--green); cursor: pointer; transition: all .3s; }
+.cal__nav:hover:not(:disabled) { background: var(--green); color: #fff; }
+.cal__nav:disabled { opacity: .3; cursor: default; }
+.cal__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal__dow { text-align: center; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding: 6px 0 10px; }
+.cal__day {
+  position: relative; aspect-ratio: 1 / 1; min-height: 40px; border: 1px solid transparent; background: var(--offwhite);
+  font-family: var(--sans); font-size: .95rem; color: var(--text); cursor: pointer; transition: all .2s;
+}
+.cal__day:hover:not(:disabled) { border-color: var(--green); }
+.cal__day:disabled { background: transparent; color: #B8B8B8; cursor: default; }
+.cal__day.is-empty { visibility: hidden; }
+.cal__day.is-today { font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+.cal__day.is-partial::after { content: ""; position: absolute; left: 50%; bottom: 6px; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: var(--orange); }
+.cal__day.is-full { background: repeating-linear-gradient(135deg, #EFE9E4, #EFE9E4 4px, #F7F5F0 4px, #F7F5F0 8px); color: #9A9A9A; text-decoration: line-through; cursor: not-allowed; }
+.cal__day.is-selected { background: var(--green); color: #fff; }
+.cal__day.is-selected::after { background: #fff; }
+.cal__legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 20px; font-size: .8rem; color: var(--muted); }
+.cal__legend li { display: inline-flex; align-items: center; gap: 8px; }
+.lg { width: 14px; height: 14px; display: inline-block; background: var(--offwhite); border: 1px solid var(--line); position: relative; }
+.lg--partial::after { content: ""; position: absolute; left: 4px; top: 4px; width: 5px; height: 5px; border-radius: 50%; background: var(--orange); }
+.lg--full { background: repeating-linear-gradient(135deg, #E2D9D2, #E2D9D2 3px, #F7F5F0 3px, #F7F5F0 6px); }
+.lg--sel { background: var(--green); border-color: var(--green); }
+
+.slots__title { font-size: 1.7rem; margin-bottom: 6px; }
+.slots__date { font-family: var(--sans); font-size: .9rem; color: var(--muted); font-weight: 300; }
+.slots__hint { font-size: .88rem; margin-bottom: 18px; }
+.slots__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+@media (min-width: 480px) { .slots__grid { grid-template-columns: repeat(6, 1fr); } }
+@media (min-width: 980px) { .slots__grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1180px) { .slots__grid { grid-template-columns: repeat(6, 1fr); } }
+.slot {
+  min-height: 42px; border: 1px solid var(--line); background: #fff; font-family: var(--sans); font-size: .85rem;
+  color: var(--green); cursor: pointer; transition: all .2s;
+}
+.slot:hover:not(:disabled) { border-color: var(--green); }
+.slot:disabled { background: repeating-linear-gradient(135deg, #EFE9E4, #EFE9E4 4px, #F7F5F0 4px, #F7F5F0 8px); color: #A0A0A0; text-decoration: line-through; cursor: not-allowed; }
+.slot.is-past:disabled { background: transparent; text-decoration: none; color: #C4C4C4; }
+.slot.is-in { background: rgba(13, 58, 1, .1); border-color: rgba(13, 58, 1, .25); }
+.slot.is-start, .slot.is-end { background: var(--green); border-color: var(--green); color: #fff; }
+.slots__empty { grid-column: 1 / -1; padding: 28px 0; color: var(--muted); font-size: .95rem; }
+.booking__summary { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); }
+.booking__summary dl { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 24px; margin: 0; }
+.booking__summary dt { font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.booking__summary dd { margin: 4px 0 0; font-family: var(--serif); font-size: 1.35rem; color: var(--green); }
+.booking__summary dd[data-sum="price"] { color: var(--orange-dark); }
+.booking__form { border-top: 1px solid var(--line); padding-top: 48px; }
+.booking__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
+.booking__actions .muted { font-size: .85rem; }
+.booking__error { margin: 0; padding: 14px 18px; border-left: 2px solid #B3261E; background: #FBF1EF; color: #8C1D18; font-size: .92rem; }
+.booking__error[hidden] { display: none; }
+
+/* ---------- 27. Escritório: plano único ---------- */
+.plan-solo { row-gap: 40px; align-items: center; }
+.plan-solo__text { grid-column: 1 / -1; }
+.plan-solo__card { grid-column: 1 / -1; }
+@media (min-width: 900px) {
+  .plan-solo__text { grid-column: 1 / 6; }
+  .plan-solo__card { grid-column: 7 / 12; }
+}

@@ -1,6 +1,6 @@
 <!--meta
 title: Aluguer de Escritório | Aprendiz – Consultoria & Formação
-description: Postos de trabalho individuais com divisória, Wi-Fi e ambiente calmo e profissional. Planos diário, semanal e mensal. Agende uma visita.
+description: Postos de trabalho individuais com divisória, Wi-Fi e ambiente calmo e profissional. Plano mensal. Agende uma visita.
 nav: escritorios
 hero: false
 -->
@@ -56,44 +56,22 @@ hero: false
 
 <section class="section bg-off">
   <div class="container">
-    <div class="grid-12 section-head">
-      <div class="reveal">
+    <div class="grid-12 plan-solo">
+      <div class="plan-solo__text reveal">
         <span class="sec-num">02</span>
-        <span class="eyebrow">Planos</span>
-        <h2>Flexibilidade à sua medida.</h2>
+        <span class="eyebrow">Plano</span>
+        <h2>Plano mensal.</h2>
+        <p class="lead muted">Um posto de trabalho só seu, durante todo o mês, num ambiente calmo e profissional. Ideal para quem precisa de estabilidade e de uma morada profissional em Luanda.</p>
       </div>
-      <p class="lead muted reveal" data-delay="1">Escolha o plano que acompanha o ritmo do seu trabalho. Valores sob consulta.</p>
-    </div>
-    <div class="plans">
-      <div class="plan reveal">
-        <span class="plan__name">Plano</span>
-        <h3>Diário</h3>
-        <p class="plan__price">1 dia útil</p>
-        <ul class="ticks">
-          <li>Posto individual com divisória</li>
-          <li>Wi-Fi e climatização</li>
-          <li>Sem compromisso</li>
-        </ul>
-        <a class="btn btn--outline" href="#visita">Agendar visita</a>
-      </div>
-      <div class="plan reveal" data-delay="1">
-        <span class="plan__name">Plano</span>
-        <h3>Semanal</h3>
-        <p class="plan__price">5 dias úteis</p>
-        <ul class="ticks">
-          <li>Tudo o que inclui o plano diário</li>
-          <li>Posto reservado durante a semana</li>
-          <li>Acesso à zona de pausa</li>
-        </ul>
-        <a class="btn btn--outline" href="#visita">Agendar visita</a>
-      </div>
-      <div class="plan plan--featured reveal" data-delay="2">
-        <span class="plan__badge">Recomendado</span>
-        <span class="plan__name">Plano</span>
+      <div class="plan plan--featured plan-solo__card reveal" data-delay="1">
+        <span class="plan__badge">Plano mensal</span>
+        <span class="plan__name">Escritório partilhado</span>
         <h3>Mensal</h3>
-        <p class="plan__price">Mês completo <small>· melhor valor</small></p>
+        <p class="plan__price">Valor sob consulta</p>
         <ul class="ticks">
-          <li>Posto fixo dedicado</li>
+          <li>Posto fixo dedicado, com divisória</li>
+          <li>Wi-Fi e climatização</li>
+          <li>Acesso à zona de pausa</li>
           <li>Horas de utilização da sala de formação</li>
           <li>Receção de correspondência</li>
         </ul>
@@ -125,10 +103,6 @@ hero: false
             <option value="">Selecione…</option>
             <option>09h00</option><option>10h00</option><option>11h00</option><option>14h00</option><option>15h00</option><option>16h00</option>
           </select><span class="error-msg" aria-live="polite"></span></div>
-        <div class="field full"><label for="v-plano">Plano de interesse</label>
-          <select id="v-plano" name="plano">
-            <option>Ainda não sei</option><option>Diário</option><option>Semanal</option><option>Mensal</option>
-          </select><span class="error-msg"></span></div>
         <div class="field full"><label for="v-msg">Mensagem</label><textarea id="v-msg" name="mensagem" placeholder="Número de postos, data de início prevista…"></textarea><span class="error-msg"></span></div>
         <div class="full"><button class="btn btn--primary" type="submit">Agendar visita</button></div>
         <p class="form-status" role="status" tabindex="-1" hidden></p>

@@ -55,9 +55,19 @@ hero: false
         <div class="field"><label for="f-curso">Formação (se aplicável)</label>
           <select id="f-curso" name="formacao">
             <option value="">—</option>
-            <option>Excel</option><option>Power BI</option><option>IA – Claude</option><option>Análise de Dados</option><option>Estatística</option>
-            <option>Contabilidade</option><option>Fiscalidade para Empreendedores</option><option>IRPS</option><option>IRPC</option>
-            <option>Processamento Salarial no Excel</option><option>Word</option><option>PowerPoint</option><option>Informática</option>
+            <optgroup label="Excel"><option>Excel Básico</option><option>Excel Intermédio</option><option>Excel Avançado</option></optgroup>
+            <optgroup label="Power BI"><option>Power BI do Básico ao Intermédio</option><option>Power BI Avançado</option></optgroup>
+            <option>IA – Claude</option>
+            <optgroup label="Análise de Dados"><option>Análise de Dados I Aplicada ao Excel</option><option>Análise de Dados II Aplicada ao Excel</option></optgroup>
+            <optgroup label="Estatística"><option>Estatística I</option><option>Estatística II</option></optgroup>
+            <optgroup label="Contabilidade"><option>Contabilidade Básica</option><option>Contabilidade Intermédia</option><option>Contabilidade Avançada</option></optgroup>
+            <option>Fiscalidade para Empreendedores</option>
+            <option>IRPS</option>
+            <option>IRPC</option>
+            <option>Processamento Salarial no Excel</option>
+            <optgroup label="Word"><option>Word Básico</option><option>Word Intermédio</option><option>Word Avançado</option></optgroup>
+            <optgroup label="PowerPoint"><option>PowerPoint do Básico ao Intermédio</option><option>PowerPoint Avançado</option></optgroup>
+            <option>Informática</option>
           </select><span class="error-msg"></span></div>
         <div class="field full"><label for="c-msg">Mensagem <span class="req">*</span></label><textarea id="c-msg" name="mensagem" required></textarea><span class="error-msg" aria-live="polite"></span></div>
         <label class="consent full"><input type="checkbox" name="consentimento" required> Autorizo a Aprendiz a utilizar os meus dados apenas para responder a este pedido.</label>
