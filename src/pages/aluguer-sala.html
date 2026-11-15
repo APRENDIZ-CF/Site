@@ -1,0 +1,126 @@
+<!--meta
+title: Aluguer de Sala de Formação | Aprendiz – Consultoria & Formação
+description: Sala de formação equipada para formações, workshops e reuniões, com ecrã de apresentação, mesas individuais, Wi-Fi e climatização. Aluguer por hora, meio-dia ou dia inteiro.
+nav: sala
+hero: false
+-->
+<section class="page-hero">
+  <div class="container">
+    <p class="breadcrumb"><a href="index.html">Início</a><span aria-hidden="true">/</span>Aluguer de Sala</p>
+    <div class="grid-12">
+      <h1 class="reveal">Aluguer de Sala de Formação</h1>
+      <p class="lead reveal" data-delay="1">Um espaço sóbrio e funcional, pronto a receber as suas formações, workshops, apresentações e reuniões.</p>
+    </div>
+  </div>
+</section>
+
+<figure class="figure full-bleed reveal">
+  <picture>
+    <source srcset="assets/img/SF_6-720.webp 720w, assets/img/SF_6.webp 1200w" sizes="(min-width: 900px) 60vw, 100vw" type="image/webp">
+    <img src="assets/img/SF_6.jpg" alt="Sala de formação com mesas individuais, cadeiras pretas estofadas e ecrã de apresentação" width="1200" height="1600" fetchpriority="high">
+  </picture>
+</figure>
+
+<section class="section">
+  <div class="container">
+    <div class="grid-12 section-head">
+      <div class="reveal">
+        <span class="sec-num">01</span>
+        <span class="eyebrow">O espaço</span>
+        <h2>Equipada para aprender, apresentar e decidir.</h2>
+      </div>
+      <p class="lead muted reveal" data-delay="1">A nossa sala está preparada para formações, workshops e reuniões, com disposição flexível das mesas e todo o equipamento necessário para que se concentre apenas no conteúdo.</p>
+    </div>
+    <ul class="amenities">
+      <li class="reveal">[[icon:screen]]<strong>Ecrã / TV</strong><span>Para apresentações, vídeo e partilha de ecrã.</span></li>
+      <li class="reveal" data-delay="1">[[icon:desk]]<strong>Mesas individuais</strong><span>Disposição em sala de aula, em U ou em grupos.</span></li>
+      <li class="reveal" data-delay="2">[[icon:chair]]<strong>Cadeiras estofadas</strong><span>Conforto para sessões longas.</span></li>
+      <li class="reveal">[[icon:light]]<strong>Iluminação</strong><span>Luz uniforme e adequada ao trabalho.</span></li>
+      <li class="reveal" data-delay="1">[[icon:wifi]]<strong>Wi-Fi</strong><span>Internet rápida para formadores e participantes.</span></li>
+      <li class="reveal" data-delay="2">[[icon:climate]]<strong>Climatização</strong><span>Ambiente agradável durante todo o ano.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section bg-off">
+  <div class="container">
+    <div class="grid-12 section-head">
+      <div class="reveal">
+        <span class="sec-num">02</span>
+        <span class="eyebrow">Modalidades</span>
+        <h2>Reserve o tempo de que precisa.</h2>
+      </div>
+      <p class="lead muted reveal" data-delay="1">Valores sob consulta, ajustados à duração, ao número de participantes e aos serviços adicionais (café, material, apoio técnico).</p>
+    </div>
+    <div class="plans">
+      <div class="plan reveal">
+        <span class="plan__name">Modalidade</span>
+        <h3>Por hora</h3>
+        <p class="plan__price">Mínimo 2 horas</p>
+        <ul class="ticks">
+          <li>Ideal para reuniões e apresentações</li>
+          <li>Ecrã, Wi-Fi e climatização</li>
+          <li>Reserva com 24 h de antecedência</li>
+        </ul>
+        <a class="btn btn--outline" href="#reserva">Pedir orçamento</a>
+      </div>
+      <div class="plan plan--featured reveal" data-delay="1">
+        <span class="plan__badge">Mais procurado</span>
+        <span class="plan__name">Modalidade</span>
+        <h3>Meio-dia</h3>
+        <p class="plan__price">4 horas <small>· manhã ou tarde</small></p>
+        <ul class="ticks">
+          <li>Workshops e formações curtas</li>
+          <li>Água para os participantes</li>
+          <li>Disposição das mesas à escolha</li>
+        </ul>
+        <a class="btn btn--primary" href="#reserva">Pedir orçamento</a>
+      </div>
+      <div class="plan reveal" data-delay="2">
+        <span class="plan__name">Modalidade</span>
+        <h3>Dia inteiro</h3>
+        <p class="plan__price">8 horas</p>
+        <ul class="ticks">
+          <li>Formações e eventos de um dia</li>
+          <li>Pausa para café opcional</li>
+          <li>Condições especiais para vários dias</li>
+        </ul>
+        <a class="btn btn--outline" href="#reserva">Pedir orçamento</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="reserva">
+  <div class="container">
+    <div class="grid-12 form-wrap">
+      <div class="form-intro reveal">
+        <span class="sec-num">03</span>
+        <span class="eyebrow">Reserva</span>
+        <h2>Pedido de reserva.</h2>
+        <p class="muted">Indique a data e o horário pretendidos. Confirmamos a disponibilidade e enviamos o orçamento em até 24 horas úteis.</p>
+      </div>
+      <form class="form reveal" data-form data-endpoint="/api/contacto" data-success="Obrigado! Recebemos o seu pedido de reserva e confirmaremos a disponibilidade brevemente." aria-label="Formulário de reserva da sala de formação">
+        <input type="hidden" name="formulario" value="Reserva de sala">
+        <div class="hp-field" aria-hidden="true"><label>Não preencher <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <div class="field"><label for="r-nome">Nome <span class="req">*</span></label><input id="r-nome" name="nome" autocomplete="name" required><span class="error-msg" aria-live="polite"></span></div>
+        <div class="field"><label for="r-empresa">Empresa</label><input id="r-empresa" name="empresa" autocomplete="organization"><span class="error-msg"></span></div>
+        <div class="field"><label for="r-email">E-mail <span class="req">*</span></label><input id="r-email" name="email" type="email" autocomplete="email" required><span class="error-msg" aria-live="polite"></span></div>
+        <div class="field"><label for="r-tel">Telefone <span class="req">*</span></label><input id="r-tel" name="telefone" type="tel" autocomplete="tel" required pattern="[0-9 +()\-]{9,}"><span class="error-msg" aria-live="polite"></span></div>
+        <div class="field"><label for="r-data">Data <span class="req">*</span></label><input id="r-data" name="data" type="date" required><span class="error-msg" aria-live="polite"></span></div>
+        <div class="field"><label for="r-horario">Horário <span class="req">*</span></label>
+          <select id="r-horario" name="horario" required>
+            <option value="">Selecione…</option>
+            <option>Por hora (indicar na mensagem)</option>
+            <option>Meio-dia – manhã (08h00–12h00)</option>
+            <option>Meio-dia – tarde (13h00–17h00)</option>
+            <option>Dia inteiro (08h00–17h00)</option>
+          </select><span class="error-msg" aria-live="polite"></span></div>
+        <div class="field"><label for="r-part">Nº de participantes <span class="req">*</span></label><input id="r-part" name="participantes" type="number" min="1" max="40" inputmode="numeric" required><span class="error-msg" aria-live="polite"></span></div>
+        <div class="field full"><label for="r-msg">Mensagem</label><textarea id="r-msg" name="mensagem" placeholder="Tipo de evento, disposição da sala, serviços adicionais…"></textarea><span class="error-msg"></span></div>
+        <div class="full"><button class="btn btn--primary" type="submit">Enviar pedido de reserva</button></div>
+        <p class="form-status" role="status" tabindex="-1" hidden></p>
+      </form>
+    </div>
+  </div>
+</section>

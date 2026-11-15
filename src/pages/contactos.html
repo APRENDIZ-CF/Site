@@ -1,0 +1,73 @@
+<!--meta
+title: Contactos | Aprendiz – Consultoria & Formação
+description: Fale com a Aprendiz – Consultoria & Formação. Telefone, e-mail, WhatsApp, morada, horário de funcionamento e formulário de contacto.
+nav: contactos
+hero: false
+-->
+<section class="page-hero">
+  <div class="container">
+    <p class="breadcrumb"><a href="index.html">Início</a><span aria-hidden="true">/</span>Contactos</p>
+    <div class="grid-12">
+      <h1 class="reveal">Contactos</h1>
+      <p class="lead reveal" data-delay="1">Pedidos de proposta, inscrições em formações ou reservas de espaços — estamos disponíveis para ajudar.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="formulario">
+  <div class="container">
+    <div class="grid-12 form-wrap">
+      <div class="form-intro reveal">
+        <span class="eyebrow">Fale connosco</span>
+        <ul class="contact-list">
+          <li><span class="k">Telefone</span><a class="v" href="tel:{{phone_link}}">{{phone}}</a></li>
+          <li><span class="k">WhatsApp</span><a class="v" href="https://wa.me/{{whatsapp}}" target="_blank" rel="noopener">{{phone}}</a></li>
+          <li><span class="k">E-mail</span><a class="v" href="mailto:{{email}}">{{email}}</a></li>
+          <li><span class="k">Morada</span><span class="v">{{address}}</span></li>
+        </ul>
+        <h2 style="font-size: 1.6rem; margin-top: 56px">Horário de funcionamento</h2>
+        <table class="hours">
+          <caption class="visually-hidden">Horário de funcionamento</caption>
+          <tr><th scope="row">Segunda a Sexta</th><td>08h00 – 18h00</td></tr>
+          <tr><th scope="row">Sábado</th><td>09h00 – 13h00</td></tr>
+          <tr><th scope="row">Domingo e feriados</th><td>Encerrado</td></tr>
+        </table>
+      </div>
+      <form class="form reveal" data-delay="1" data-form data-endpoint="/api/contacto" aria-label="Formulário de contacto">
+        <input type="hidden" name="formulario" value="Contacto">
+        <div class="hp-field" aria-hidden="true"><label>Não preencher <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <div class="field"><label for="c-nome">Nome <span class="req">*</span></label><input id="c-nome" name="nome" autocomplete="name" required><span class="error-msg" aria-live="polite"></span></div>
+        <div class="field"><label for="c-empresa">Empresa</label><input id="c-empresa" name="empresa" autocomplete="organization"><span class="error-msg"></span></div>
+        <div class="field"><label for="c-email">E-mail <span class="req">*</span></label><input id="c-email" name="email" type="email" autocomplete="email" required><span class="error-msg" aria-live="polite"></span></div>
+        <div class="field"><label for="c-tel">Telefone</label><input id="c-tel" name="telefone" type="tel" autocomplete="tel" pattern="[0-9 +()\-]{9,}"><span class="error-msg" aria-live="polite"></span></div>
+        <div class="field"><label for="c-assunto">Assunto <span class="req">*</span></label>
+          <select id="c-assunto" name="assunto" required>
+            <option value="">Selecione…</option>
+            <option value="Proposta">Pedido de proposta</option>
+            <option value="Diagnóstico">Diagnóstico gratuito</option>
+            <option value="Consultoria">Consultoria</option>
+            <option value="Inscrição">Inscrição em formação</option>
+            <option value="Formação à medida">Formação à medida</option>
+            <option value="Sala">Aluguer de sala</option>
+            <option value="Escritório">Aluguer de escritório</option>
+            <option value="Outro">Outro assunto</option>
+          </select><span class="error-msg" aria-live="polite"></span></div>
+        <div class="field"><label for="f-curso">Formação (se aplicável)</label>
+          <select id="f-curso" name="formacao">
+            <option value="">—</option>
+            <option>Excel</option><option>Power BI</option><option>IA – Claude</option><option>Análise de Dados</option><option>Estatística</option>
+            <option>Contabilidade</option><option>Fiscalidade para Empreendedores</option><option>IRPS</option><option>IRPC</option>
+            <option>Processamento Salarial no Excel</option><option>Word</option><option>PowerPoint</option><option>Informática</option>
+          </select><span class="error-msg"></span></div>
+        <div class="field full"><label for="c-msg">Mensagem <span class="req">*</span></label><textarea id="c-msg" name="mensagem" required></textarea><span class="error-msg" aria-live="polite"></span></div>
+        <label class="consent full"><input type="checkbox" name="consentimento" required> Autorizo a Aprendiz a utilizar os meus dados apenas para responder a este pedido.</label>
+        <div class="full"><button class="btn btn--primary" type="submit">Enviar mensagem</button></div>
+        <p class="form-status" role="status" tabindex="-1" hidden></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section aria-label="Localização no mapa">
+  <iframe class="map" title="Mapa com a localização da Aprendiz – Consultoria &amp; Formação" src="https://www.google.com/maps?q={{map_query}}&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+</section>
