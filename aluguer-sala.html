@@ -72,7 +72,10 @@
     <p class="breadcrumb"><a href="index.html">Início</a><span aria-hidden="true">/</span>Aluguer de Sala</p>
     <div class="grid-12">
       <h1 class="reveal">Aluguer de Sala de Formação</h1>
-      <p class="lead reveal" data-delay="1">Um espaço sóbrio e funcional, pronto a receber as suas formações, workshops, apresentações e reuniões.</p>
+      <div class="page-hero__side reveal" data-delay="1">
+        <p class="lead">Um espaço sóbrio e funcional, pronto a receber as suas formações, workshops, apresentações e reuniões.</p>
+        <a class="btn btn--primary btn--icon" href="#reserva"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="1.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M7.5 13.5h2M11 13.5h2M14.5 13.5h2M7.5 17h2M11 17h2"/></svg> Ver disponibilidade e reservar</a>
+      </div>
     </div>
   </div>
 </section>
@@ -104,49 +107,25 @@
   </div>
 </section>
 
-<section class="section bg-off" id="precos">
-  <div class="container">
-    <div class="grid-12 section-head">
-      <div class="reveal">
-        <span class="sec-num">02</span>
-        <span class="eyebrow">Preços</span>
-        <h2>Pague apenas as horas de que precisa.</h2>
-      </div>
-      <p class="lead muted reveal" data-delay="1">Aberto todos os dias, das 08h00 às 20h00. O valor é calculado por hora, de acordo com o dia da semana.</p>
-    </div>
-    <div class="prices">
-      <div class="price reveal">
-        <span class="price__day">Dias úteis</span>
-        <span class="price__sub">Segunda a sexta-feira</span>
-        <p class="price__value">5.000 <small>Kz / hora</small></p>
-      </div>
-      <div class="price reveal" data-delay="1">
-        <span class="price__day">Sábado</span>
-        <span class="price__sub">08h00 – 20h00</span>
-        <p class="price__value">6.000 <small>Kz / hora</small></p>
-      </div>
-      <div class="price reveal" data-delay="2">
-        <span class="price__day">Domingo</span>
-        <span class="price__sub">08h00 – 20h00</span>
-        <p class="price__value">7.000 <small>Kz / hora</small></p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="section" id="reserva">
+<section class="section booking-band" id="reserva">
   <div class="container">
-    <div class="grid-12 section-head">
-      <div class="reveal">
-        <span class="sec-num">03</span>
-        <span class="eyebrow">Reserva</span>
-        <h2>Escolha o dia e o horário.</h2>
+    <div class="booking-band__head reveal">
+      <div>
+        <span class="booking-band__tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="1.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M7.5 13.5h2M11 13.5h2M14.5 13.5h2M7.5 17h2M11 17h2"/></svg> Calendário de reservas</span>
+        <h2>Consulte a disponibilidade e reserve a sala.</h2>
+        <p class="lead">Escolha um dia no calendário e, depois, a hora de início e a hora de fim. Aberto todos os dias, das 08h00 às 20h00.</p>
       </div>
-      <p class="lead muted reveal" data-delay="1">Selecione um dia no calendário e, depois, a hora de início e a hora de fim. Os horários já ocupados aparecem bloqueados.</p>
+      <ul class="booking-band__prices" aria-label="Preços por hora">
+        <li><span>Dias úteis</span><strong>5.000 Kz</strong><small>por hora</small></li>
+        <li><span>Sábado</span><strong>6.000 Kz</strong><small>por hora</small></li>
+        <li><span>Domingo</span><strong>7.000 Kz</strong><small>por hora</small></li>
+      </ul>
     </div>
 
     <div class="booking" id="booking" data-whatsapp="244923353534" data-rates='{"weekday":5000,"saturday":6000,"sunday":7000}' data-open="08:00" data-close="20:00" data-step="30">
       <div class="booking__cal">
+        <p class="booking__step"><span>1</span> Escolha o dia</p>
         <div class="cal__head">
           <button type="button" class="cal__nav" data-cal="prev" aria-label="Mês anterior">‹</button>
           <h3 class="cal__title" aria-live="polite"></h3>
@@ -161,6 +140,7 @@
         </ul>
       </div>
       <div class="booking__slots">
+        <p class="booking__step"><span>2</span> Escolha o horário</p>
         <h3 class="slots__title">Horários <span class="slots__date">— escolha primeiro um dia</span></h3>
         <p class="slots__hint muted">Clique na hora de início e depois na hora de fim (mínimo 1 hora).</p>
         <div class="slots__grid" aria-live="polite"></div>
@@ -171,10 +151,20 @@
             <div><dt>Duração</dt><dd data-sum="hours"></dd></div>
             <div><dt>Valor estimado</dt><dd data-sum="price"></dd></div>
           </dl>
+          <a class="btn btn--primary booking__continue" href="#dados-reserva">Continuar para os seus dados</a>
         </div>
       </div>
     </div>
+  </div>
+</section>
 
+<section class="section booking-form-wrap" id="dados-reserva">
+  <div class="container">
+    <div class="booking-form__head">
+      <span class="sec-num">02</span>
+      <span class="eyebrow">Os seus dados</span>
+      <h2>Complete o pedido de reserva.</h2>
+    </div>
     <form class="form booking__form reveal" id="booking-form" data-booking-form aria-label="Dados para a reserva da sala de formação">
       <input type="hidden" name="formulario" value="Reserva de sala">
       <input type="hidden" name="data" id="b-data">
