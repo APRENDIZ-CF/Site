@@ -17,7 +17,7 @@ hero: true            (cabeçalho transparente sobre Hero)
 
 Atalhos disponíveis no conteúdo:
   [[icon:nome]]                          ícone SVG de traço fino
-  [[u:ID_UNSPLASH|texto alt|sizes|eager]] imagem de banco de fotos responsiva
+  [[p:nome|texto alt|sizes|eager]]         fotografia em assets/img/photos (nome-800/1600.webp)
   {{phone}} {{email}} {{whatsapp}} ...   dados de contacto (ver SITE)
 """
 import json
@@ -99,13 +99,26 @@ def icon(name, cls=""):
             f'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{body}</svg>')
 
 
-def unsplash(photo_id, alt, sizes="100vw", eager=False):
-    base = f"https://images.unsplash.com/photo-{photo_id}?auto=format&fit=crop&q=72"
-    widths = [640, 960, 1280, 1600, 2000]
-    srcset = ", ".join(f"{base}&w={w} {w}w" for w in widths)
+PHOTO_IDS = {
+    "1486406146926-c627a92ad1ab": "hero",
+    "1600880292203-757bb62b4baf": "reuniao-equipa",
+    "1497366216548-37526070297c": "sobre-escritorio",
+    "1454165804606-c3d57bc86b40": "sobre-relatorios",
+    "1552664730-d307ca884978": "sobre-colaboracao",
+    "1487958449943-2429e8be8625": "sobre-arquitetura",
+    "1431540015161-0bf868a2d407": "consultoria-sala",
+    "1524178232363-1fb2b075b655": "formacao-empresas",
+}
+
+
+def photo(name, alt, sizes="100vw", eager=False):
+    """Fotografia local em WebP (assets/img/photos/<nome>-<largura>.webp)."""
+    name = PHOTO_IDS.get(name, name)
+    small, big = (1000, 2000) if name == "hero" else (800, 1600)
+    base = f"assets/img/photos/{name}"
     loading = 'fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
-    return (f'<img src="{base}&w=1280" srcset="{srcset}" sizes="{sizes}" '
-            f'alt="{alt}" width="1600" height="1067" {loading}>')
+    return (f'<img src="{base}-{big}.webp" srcset="{base}-{small}.webp {small}w, {base}-{big}.webp {big}w" '
+            f'sizes="{sizes}" alt="{alt}" width="1600" height="1067" {loading}>')
 
 
 def render_tokens(html):
@@ -116,8 +129,8 @@ def render_tokens(html):
         pid, alt = parts[0], parts[1]
         sizes = parts[2] if len(parts) > 2 and parts[2] else "100vw"
         eager = len(parts) > 3 and parts[3] == "eager"
-        return unsplash(pid, alt, sizes, eager)
-    html = re.sub(r"\[\[u:([^\]]+)\]\]", _u, html)
+        return photo(pid, alt, sizes, eager)
+    html = re.sub(r"\[\[(?:u|p):([^\]]+)\]\]", _u, html)
     for k, v in SITE.items():
         html = html.replace("{{" + k + "}}", v)
     html = html.replace("{{wa_path}}", WA_PATH)
@@ -163,7 +176,6 @@ PAGE_TMPL = """<!doctype html>
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://images.unsplash.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 {jsonld}

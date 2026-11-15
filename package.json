@@ -3,8 +3,11 @@
   "private": true,
   "version": "1.0.0",
   "description": "Website institucional Aprendiz – Consultoria & Formação",
-  "engines": { "node": ">=18" },
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
+    "node-ical": "^0.20.1",
     "nodemailer": "^6.9.16"
   }
 }

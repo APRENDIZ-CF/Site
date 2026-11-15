@@ -23,3 +23,9 @@ Os três formulários (contacto, reserva de sala, agendar visita) enviam para `/
 ## Editar
 - Contactos e morada: dicionário `SITE` no topo de `build.py`, depois `python3 build.py`.
 - Fotografias: `assets/img/SF_6`, `CW_3`, `CW_6` (`.jpg`, `.webp` e `-720.webp`), `logo.png`, `logo-white.png`.
+
+## Calendário da sala (ocupação)
+A página Aluguer de Sala mostra os horários ocupados lidos de um calendário Google.
+1. No Google Calendar, crie um calendário chamado "Sala de Formação" e registe lá cada reserva confirmada (título: "Reservado").
+2. Em Definições do calendário → "Endereço secreto no formato iCal", copie o endereço.
+3. Na Vercel → Settings → Environment Variables, crie `GCAL_ICS_URL` com esse endereço e faça Redeploy.
