@@ -31,7 +31,7 @@ SRC = ROOT / "src"
 # Dados de contacto — SUBSTITUIR pelos dados reais da empresa
 # ---------------------------------------------------------------------------
 SITE = {
-    "url": "https://aprendiz-seven.vercel.app",         # domínio final (para Open Graph)
+    "url": "https://aprendiz2021.com",         # domínio final (para Open Graph)
     "phone": "+244 923 353 534",
     "phone_link": "+244923353534",
     "whatsapp": "244923353534",                   # só dígitos, com indicativo
