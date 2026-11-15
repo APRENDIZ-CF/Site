@@ -794,3 +794,22 @@ h4 { font-size: 1.35rem; }
 .map-card__addr svg { width: 20px; height: 20px; color: var(--orange); flex-shrink: 0; margin-top: 2px; }
 .map-card .btn { align-self: flex-start; }
 .hours__title { font-size: 1.5rem; margin: 28px 0 6px; }
+
+/* ---------- 30. Calendário compacto e nítido; nomes das páginas a negrito ---------- */
+.cal__day { aspect-ratio: auto; height: 42px; min-height: 0; font-size: 1.05rem; font-weight: 600; color: #0B2E01; }
+.cal__day:disabled { font-weight: 400; color: #B5B5B5; }
+.cal__day.is-empty { height: 0; }
+.cal__dow { padding: 2px 0 8px; font-weight: 600; font-size: .72rem; }
+.cal__head { margin-bottom: 12px; }
+.cal__title { font-weight: 600; }
+.cal__legend { margin-top: 14px; font-size: .78rem; color: #4A4A4A; }
+.booking__step { font-weight: 600; }
+.slot { font-weight: 600; color: #0B2E01; height: 40px; min-height: 0; }
+.slot:disabled { font-weight: 400; }
+.slots__title { font-weight: 600; }
+.slots__hint { color: #4A4A4A; }
+@media (min-width: 640px) { .booking__cal, .booking__slots { padding: 24px 26px; } }
+
+.main-nav a { font-weight: 600; }
+.mobile-menu li a { font-weight: 600; }
+h1, .page-hero h1 { font-weight: 600; }

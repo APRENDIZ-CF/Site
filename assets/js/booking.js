@@ -72,8 +72,16 @@
     var first = new Date(Date.UTC(state.y, state.m, 1)).getUTCDay(); // 0 = domingo
     var offset = (first + 6) % 7;
     var days = new Date(Date.UTC(state.y, state.m + 1, 0)).getUTCDate();
+    var startDay = 1;
+    // No mês atual, não mostrar as semanas que já passaram (começa na segunda-feira desta semana)
+    if (state.y === nowL.getUTCFullYear() && state.m === nowL.getUTCMonth()) {
+      var todayD = nowL.getUTCDate();
+      var mondayOffset = (nowL.getUTCDay() + 6) % 7;
+      startDay = Math.max(1, todayD - mondayOffset);
+      if (startDay > 1) offset = 0;
+    }
     for (var e = 0; e < offset; e++) { var x = document.createElement("span"); x.className = "cal__day is-empty"; grid.appendChild(x); }
-    for (var d = 1; d <= days; d++) {
+    for (var d = startDay; d <= days; d++) {
       var date = ymd(state.y, state.m, d);
       var st = dayState(date);
       var b = document.createElement("button");
