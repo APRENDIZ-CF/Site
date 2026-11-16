@@ -148,7 +148,7 @@ def render_tokens(html):
     for k, v in SITE.items():
         html = html.replace("{{" + k + "}}", v)
     html = html.replace("{{wa_path}}", WA_PATH)
-    for rel in ("assets/css/style.css", "assets/js/main.js", "assets/js/booking.js"):
+    for rel in ("assets/css/style.css", "assets/js/main.js", "assets/js/booking.js", "assets/js/inscricao.js"):
         html = html.replace(f'"{rel}"', f'"{rel}?v={asset_version(rel)}"')
     return html
 

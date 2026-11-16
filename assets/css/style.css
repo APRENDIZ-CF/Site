@@ -903,3 +903,25 @@ h1, .page-hero h1 { font-weight: 600; }
 .svc-index { top: 92px; }
 @media (min-width: 900px) { .contact-aside { top: 116px; } }
 @media (max-width: 599px) { .brand img, .site-header.is-solid .brand img, .site-header.no-hero .brand img { height: 56px; } .site-header.is-solid, .site-header.no-hero { height: 80px; } .page-hero { padding-top: calc(80px + 28px); } }
+
+/* ---------- Inscrição e pagamento por IBAN ---------- */
+#passo-dados[hidden], #passo-pagamento[hidden], #passo-comprovativo[hidden], [data-pay-row][hidden] { display: none; }
+#passo-pagamento h2:focus, #passo-comprovativo h2:focus { outline: none; }
+#passo-comprovativo { margin-top: 48px; }
+.pay-already { margin-top: 28px; font-size: .95rem; }
+.pay-already a, .pay-steps + .muted a { color: var(--orange-dark); text-decoration: underline; text-underline-offset: 3px; }
+.pay-card { margin: 24px 0; padding: 8px 24px; background: var(--offwhite); border-left: 2px solid var(--green); }
+.pay-card > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.pay-card > div:last-child { border-bottom: 0; }
+.pay-card dt { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); font-weight: 500; align-self: center; }
+.pay-card dd { margin: 0; color: var(--green); font-weight: 400; text-align: right; overflow-wrap: anywhere; }
+.pay-card__iban dd, .pay-card__code dd { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 1.02rem; letter-spacing: .02em; }
+.pay-card__code dd span { font-weight: 600; color: var(--orange-dark); }
+.pay-copy { margin-left: 10px; font: inherit; font-family: var(--sans); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--green); background: #fff; border: 1px solid var(--line); padding: 4px 10px; cursor: pointer; }
+.pay-copy:hover { border-color: var(--green); }
+.pay-note { padding: 16px 20px; border-left: 2px solid var(--orange); background: #fff7f3; font-size: .95rem; }
+.pay-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+.pay-steps { counter-reset: s; list-style: none; padding: 0; margin: 18px 0 24px; }
+.pay-steps li { counter-increment: s; position: relative; padding: 14px 0 14px 46px; border-bottom: 1px solid var(--line); font-size: .98rem; }
+.pay-steps li::before { content: counter(s); position: absolute; left: 0; top: 14px; width: 30px; height: 30px; border-radius: 50%; background: var(--green); color: #fff; font-size: .85rem; display: grid; place-items: center; }
+.pay-steps strong { color: var(--green); font-weight: 500; }
