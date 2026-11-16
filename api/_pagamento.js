@@ -40,9 +40,8 @@ const PRECOS = {
   "Informática": 45000,
   "Contabilidade para Empreendedores": 30000,
   "Workshop Regime Jurídico das Facturas": 15000,
-  // Formações privadas (particulares). Análise de Dados I: preço por hora; restantes temas: pacotes.
+  // Formações privadas (particulares): pacotes Único, Bronze, Prata e Ouro, para qualquer tema.
   // Pacotes para empresas (20.000 / 190.000 / 277.500 / 360.000 Kz) só são mostrados na página Formações.
-  "Formação Privada – Análise de Dados I Aplicada ao Excel": "17.000 Kz / hora",
   "Formação Privada – Plano Único (1h)": 15000,
   "Formação Privada – Plano Bronze (10h)": 140000,
   "Formação Privada – Plano Prata (15h)": 202500,
