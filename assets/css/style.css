@@ -843,3 +843,30 @@ h1, .page-hero h1 { font-weight: 600; }
 .no-hero .main-nav a:hover { color: #F3B79F; }
 .no-hero .nav-toggle span { background: #fff; }
 .site-header.no-hero { background: linear-gradient(100deg, #3B5D39 0%, #4E704C 50%, #5E7F5B 100%); }
+
+/* ---------- 33. Redes sociais no cabeçalho e rodapé horizontal ---------- */
+.header-social { display: none; }
+.header-social .socials { margin: 0; gap: 8px; }
+.header-social .socials a { width: 36px; height: 36px; border-color: rgba(255,255,255,.55); }
+.header-social .socials svg { width: 15px; height: 15px; }
+.is-solid .header-social .socials a { border-color: var(--line); background: var(--green); }
+@media (min-width: 1180px) { .header-social { display: flex; margin-left: auto; margin-right: 4px; } .main-nav { margin-left: auto; } }
+@media (min-width: 1180px) and (max-width: 1320px) { .main-nav ul { gap: 14px; } .main-nav a { font-size: .72rem; letter-spacing: .08em; } }
+.mm-social .socials { margin: 28px 0 0; }
+
+.site-footer { padding: clamp(48px, 6vw, 72px) 0 28px; }
+.f-top { display: grid; grid-template-columns: 1fr; gap: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--line-light); }
+@media (min-width: 900px) { .f-top { grid-template-columns: 1fr auto; align-items: start; gap: 48px; } }
+.f-inline { display: flex; flex-wrap: wrap; gap: 10px 28px; }
+.f-inline li { margin: 0; }
+.f-follow .socials { margin-top: 0; }
+.f-contact { padding: 28px 0 0; }
+.f-contact h2, .f-col h2 { font-family: var(--sans); font-size: .7rem; letter-spacing: .26em; text-transform: uppercase; font-weight: 500; color: #fff; margin-bottom: 18px; }
+.f-contact__list { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 640px) { .f-contact__list { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .f-contact__list { grid-template-columns: auto auto auto 1fr; gap: 0; } .f-contact__list li { padding: 0 28px; border-left: 1px solid var(--line-light); } .f-contact__list li:first-child { padding-left: 0; border-left: 0; } }
+.f-contact__list a { display: inline-flex; align-items: flex-start; gap: 10px; color: rgba(255,255,255,.85); transition: color .3s; }
+.f-contact__list a:hover { color: #fff; }
+.f-contact__list svg { width: 18px; height: 18px; color: #F3B79F; flex-shrink: 0; margin-top: 4px; stroke-width: 1.5; }
+.f-bottom { margin-top: 32px; }
+.f-top .f-col, .site-footer .f-contact { grid-column: auto; }

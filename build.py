@@ -36,6 +36,7 @@ SITE = {
     "phone_link": "+244923353534",
     "whatsapp": "244923353534",                   # só dígitos, com indicativo
     "email": "jdsaprendiz@gmail.com",
+    "facebook": "https://www.facebook.com/share/1EQHuuKDxi/?mibextid=wwXIfr",
     "address": "Rua Cónego Manuel das Neves, Prédio 5, Porta 9 – Kinaxixi, Luanda",
     "map_query": "-8.8152712,13.2409689",
     "map_link": "https://www.google.com/maps/dir/?api=1&amp;destination=-8.8152712%2C13.2409689",
@@ -223,8 +224,9 @@ def jsonld():
 
 
 def build():
-    header_t = (SRC / "partials/header.html").read_text(encoding="utf-8")
-    footer_t = (SRC / "partials/footer.html").read_text(encoding="utf-8")
+    socials_t = (SRC / "partials/socials.html").read_text(encoding="utf-8").strip()
+    header_t = (SRC / "partials/header.html").read_text(encoding="utf-8").replace("{{socials}}", socials_t)
+    footer_t = (SRC / "partials/footer.html").read_text(encoding="utf-8").replace("{{socials}}", socials_t)
     for page in sorted((SRC / "pages").glob("*.html")):
         meta, content = parse_page(page)
         active = meta.get("nav", "")
