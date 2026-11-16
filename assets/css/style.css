@@ -876,3 +876,30 @@ h1, .page-hero h1 { font-weight: 600; }
   .header-social .socials a { width: 32px; height: 32px; }
   .header-cta { padding: 0 16px; letter-spacing: .12em; }
 }
+
+/* ---------- 34. Menu maior e barra mais alta ---------- */
+:root { --header-h: 104px; }
+.site-header.is-solid, .site-header.no-hero { height: 92px; }
+.site-header.is-solid .brand img, .site-header.no-hero .brand img { height: 66px; }
+.brand img { height: 76px; }
+.main-nav a { font-size: .95rem; letter-spacing: .06em; }
+.main-nav ul { gap: 26px; }
+.header-social .socials a { width: 40px; height: 40px; }
+.header-social .socials svg { width: 17px; height: 17px; }
+.header-cta { min-height: 50px; font-size: .8rem; padding: 0 24px; }
+@media (min-width: 1180px) and (max-width: 1500px) {
+  .main-nav a { font-size: .86rem; letter-spacing: .04em; }
+  .main-nav ul { gap: 18px; }
+  .header-social .socials a { width: 36px; height: 36px; }
+}
+@media (min-width: 1180px) and (max-width: 1320px) {
+  .main-nav a { font-size: .78rem; letter-spacing: .02em; }
+  .main-nav ul { gap: 13px; }
+  .site-header .container { gap: 14px; }
+  .header-social .socials a { width: 32px; height: 32px; }
+  .header-cta { padding: 0 14px; font-size: .72rem; }
+}
+.page-hero { padding-top: calc(92px + clamp(28px, 3.5vw, 52px)); }
+.svc-index { top: 92px; }
+@media (min-width: 900px) { .contact-aside { top: 116px; } }
+@media (max-width: 599px) { .brand img, .site-header.is-solid .brand img, .site-header.no-hero .brand img { height: 56px; } .site-header.is-solid, .site-header.no-hero { height: 80px; } .page-hero { padding-top: calc(80px + 28px); } }
