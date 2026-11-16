@@ -8,9 +8,9 @@
  *   Se uma formação não tiver preço (ou for null), o aluno vê "valor a confirmar"
  *   e a Aprendiz envia o valor depois, por e-mail ou WhatsApp.
  */
-const IBAN = "AO06 0000 0000 0000 0000 0000 0"; // SUBSTITUIR pelo IBAN real
-const TITULAR = "Aprendiz – Consultoria & Formação"; // SUBSTITUIR pelo nome do titular da conta
-const BANCO = ""; // opcional, ex.: "BAI", "BFA", "BIC"…
+const IBAN = "AO06 0006 0000 3381 9362 3018 4";
+const TITULAR = "Jandira Dias da Silva";
+const BANCO = "BFA";
 
 const PRECOS = {
   "Excel Básico": null,
