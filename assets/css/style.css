@@ -842,3 +842,4 @@ h1, .page-hero h1 { font-weight: 600; }
 .no-hero .main-nav a { color: #fff; }
 .no-hero .main-nav a:hover { color: #F3B79F; }
 .no-hero .nav-toggle span { background: #fff; }
+.site-header.no-hero { background: linear-gradient(100deg, #3B5D39 0%, #4E704C 50%, #5E7F5B 100%); }
