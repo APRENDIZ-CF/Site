@@ -30,7 +30,7 @@ const PRECOS = {
   "Fiscalidade para Empreendedores": 30000,
   "IRPS": 100000,
   "IRPC": 150000,
-  "Processamento Salarial no Excel": 12000,
+  "Processamento Salarial no Excel": 15000,
   "Word Básico": 50000,
   "Word Intermédio": 65000,
   "Word Avançado": 85000,
