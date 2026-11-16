@@ -8,7 +8,7 @@ hero: false
   <div class="container">
     <div class="grid-12">
       <h1 class="reveal">Inscrição</h1>
-      <p class="lead reveal" data-delay="1">Inscreva-se em três passos: preencha os seus dados, faça a transferência bancária e envie-nos o comprovativo.</p>
+      <p class="lead reveal" data-delay="1">Para particulares: preencha os seus dados, faça a transferência bancária e envie-nos o comprovativo. Empresas: preço sob consulta, por e-mail ou WhatsApp.</p>
     </div>
   </div>
 </section>
@@ -23,7 +23,12 @@ hero: false
           <h2>1. Os seus dados</h2>
           <form class="form" id="form-inscricao" data-endpoint="/api/inscricao" novalidate aria-label="Formulário de inscrição">
             <div class="hp-field" aria-hidden="true"><label>Não preencher <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
-            <div class="field full"><label for="i-curso">Formação <span class="req">*</span></label>
+            <div class="field full"><label for="i-nome">Nome completo <span class="req">*</span></label><input id="i-nome" name="nome" autocomplete="name" required><span class="error-msg" aria-live="polite"></span></div>
+            <div class="field"><label for="i-email">E-mail <span class="req">*</span></label><input id="i-email" name="email" type="email" autocomplete="email" required><span class="error-msg" aria-live="polite"></span></div>
+            <div class="field"><label for="i-tel">Telefone <span class="req">*</span></label><input id="i-tel" name="telefone" type="tel" autocomplete="tel" pattern="[0-9 +()\-]{9,}" required><span class="error-msg" aria-live="polite"></span></div>
+            <div class="field"><label for="i-mod">Modalidade <span class="req">*</span></label>
+              <select id="i-mod" name="modalidade" required><option value="">Selecione…</option><option>Presencial</option><option>Online</option></select><span class="error-msg" aria-live="polite"></span></div>
+            <div class="field"><label for="i-curso">Nome da formação <span class="req">*</span></label>
               <select id="i-curso" name="formacao" required>
                 <option value="">Selecione…</option>
                 <optgroup label="Excel"><option>Excel Básico</option><option>Excel Intermédio</option><option>Excel Avançado</option></optgroup>
@@ -31,40 +36,41 @@ hero: false
                 <option>IA – Claude</option>
                 <optgroup label="Análise de Dados"><option>Análise de Dados I Aplicada ao Excel</option><option>Análise de Dados II Aplicada ao Excel</option></optgroup>
                 <optgroup label="Estatística"><option>Estatística I</option><option>Estatística II</option></optgroup>
-                <optgroup label="Contabilidade"><option>Contabilidade Básica</option><option>Contabilidade Intermédia</option><option>Contabilidade Avançada</option></optgroup>
+                <optgroup label="Contabilidade"><option>Contabilidade Básica</option><option>Contabilidade Intermédia</option><option>Contabilidade Avançada</option><option>Contabilidade para Empreendedores</option></optgroup>
                 <option>Fiscalidade para Empreendedores</option>
+                <option>Workshop Regime Jurídico das Facturas</option>
                 <option>IRPS</option>
                 <option>IRPC</option>
                 <option>Processamento Salarial no Excel</option>
                 <optgroup label="Word"><option>Word Básico</option><option>Word Intermédio</option><option>Word Avançado</option></optgroup>
                 <optgroup label="PowerPoint"><option>PowerPoint do Básico ao Intermédio</option><option>PowerPoint Avançado</option></optgroup>
                 <option>Informática</option>
+                <optgroup label="Formações Privadas (personalizadas)"><option>Formação Privada – Análise de Dados I Aplicada ao Excel</option><option>Formação Privada – Outras Formações</option></optgroup>
               </select><span class="error-msg" aria-live="polite"></span>
               <p class="pay-price" id="i-preco" aria-live="polite" hidden></p></div>
-            <div class="field full"><span class="field__label" id="i-tipo-l">Inscrição como <span class="req">*</span></span>
-              <div class="pay-tipo" role="radiogroup" aria-labelledby="i-tipo-l">
-                <label><input type="radio" name="tipo" value="Particular" checked> Particular</label>
-                <label><input type="radio" name="tipo" value="Empresa"> Empresa <small>(preço sob consulta)</small></label>
-              </div></div>
-            <div class="field full" id="i-empresa-field" hidden><label for="i-empresa">Nome da empresa <span class="req">*</span></label><input id="i-empresa" name="empresa" autocomplete="organization" disabled><span class="error-msg" aria-live="polite"></span></div>
-            <div class="field"><label for="i-nome">Nome completo <span class="req">*</span></label><input id="i-nome" name="nome" autocomplete="name" required><span class="error-msg" aria-live="polite"></span></div>
-            <div class="field"><label for="i-email">E-mail <span class="req">*</span></label><input id="i-email" name="email" type="email" autocomplete="email" required><span class="error-msg" aria-live="polite"></span></div>
-            <div class="field"><label for="i-tel">Telefone / WhatsApp <span class="req">*</span></label><input id="i-tel" name="telefone" type="tel" autocomplete="tel" pattern="[0-9 +()\-]{9,}" required><span class="error-msg" aria-live="polite"></span></div>
-            <div class="field"><label for="i-mod">Modalidade</label>
-              <select id="i-mod" name="modalidade"><option>Presencial</option><option>Online</option></select><span class="error-msg"></span></div>
-            <div class="field full"><label for="i-msg">Observações</label><textarea id="i-msg" name="mensagem"></textarea><span class="error-msg"></span></div>
-            <label class="consent full"><input type="checkbox" name="consentimento" required> Autorizo a Aprendiz a utilizar os meus dados para gerir esta inscrição.</label>
-            <div class="full"><button class="btn btn--primary" type="submit" data-label-particular="Continuar para o pagamento" data-label-empresa="Pedir proposta">Continuar para o pagamento</button></div>
+            <div class="field full"><label for="i-doc">Nº do documento de identificação</label><input id="i-doc" name="documento" autocomplete="off" maxlength="40"><span class="error-msg" aria-live="polite"></span></div>
+            <div class="field"><label for="i-data">Data da formação</label><input id="i-data" name="data_formacao" type="date"><span class="error-msg" aria-live="polite"></span></div>
+            <div class="field"><label for="i-hora">Horário da formação</label><input id="i-hora" name="horario" placeholder="ex.: 18h00 – 21h00" maxlength="60"><span class="error-msg" aria-live="polite"></span></div>
+            <div class="field full terms"><label class="terms__check"><input type="checkbox" name="aceita_cancelamento" value="Sim" required> <span>Concordo com as condições de cancelamento:</span></label>
+              <ol class="terms__list">
+                <li>Cancelamento até 3 dias úteis antes da formação, será ressarcido 100% do valor pago.</li>
+                <li>Cancelamento até 2 dias úteis antes da formação, será ressarcido 75% do valor pago.</li>
+                <li>Cancelamento até 1 dia útil antes da formação, será ressarcido 50% do valor pago.</li>
+                <li>Cancelamento na data de início da formação, não será ressarcido qualquer valor.</li>
+              </ol><span class="error-msg" aria-live="polite"></span></div>
+            <div class="field full terms"><label class="terms__check"><input type="checkbox" name="aceita_regras" value="Sim" required> <span>Concordo com as regras da formação:</span></label>
+              <ol class="terms__list">
+                <li>A recuperação da matéria por atraso ou falta do formando é responsabilidade do mesmo.</li>
+                <li>A emissão de certificado é somente para formandos que forem aprovados no teste.</li>
+                <li>Se reprovar e pretender repetir a formação, deverá pagar 100% do valor da formação.</li>
+                <li>Durante a formação o formando deve respeito ao formador e colegas. Caso se verifique o contrário, o formando será expulso sem direito a reembolso do valor pago.</li>
+                <li>A segurança das viaturas dos formandos é responsabilidade dos mesmos.</li>
+              </ol><span class="error-msg" aria-live="polite"></span></div>
+            <div class="field"><label for="i-hoje">Data de hoje</label><input id="i-hoje" name="data_hoje" type="date" readonly tabindex="-1"><span class="error-msg"></span></div>
+            <div class="full"><button class="btn btn--primary" type="submit">Continuar para o pagamento</button></div>
             <p class="form-status" role="status" tabindex="-1" hidden></p>
           </form>
           <p class="muted pay-already">Já se inscreveu e tem um código? <a href="#passo-comprovativo" data-show-comprovativo>Enviar comprovativo</a></p>
-        </div>
-
-        <!-- Empresas: pedido recebido (sem pagamento online) -->
-        <div id="passo-empresa" hidden>
-          <h2 tabindex="-1">Pedido recebido.</h2>
-          <p>Obrigado! Para empresas, o valor da formação é <strong>sob consulta</strong>. Vamos enviar a proposta por e-mail ou WhatsApp brevemente.</p>
-          <p class="pay-actions"><a class="btn btn--outline" href="https://wa.me/{{whatsapp}}" target="_blank" rel="noopener">Falar pelo WhatsApp</a></p>
         </div>
 
         <!-- Passo 2: dados para pagamento (preenchido depois do passo 1) -->
@@ -108,7 +114,7 @@ hero: false
           <li><strong>Envie o comprovativo.</strong> Carregue o PDF ou a foto do comprovativo aqui, ou envie pelo WhatsApp.</li>
           <li><strong>Vaga confirmada.</strong> Validamos o pagamento e confirmamos a sua vaga por e-mail.</li>
         </ol>
-        <p class="muted"><strong>Empresas:</strong> preço sob consulta. Escolha "Empresa" no formulário ou fale connosco por <a href="mailto:{{email}}">e-mail</a> ou <a href="https://wa.me/{{whatsapp}}" target="_blank" rel="noopener">WhatsApp</a>.</p>
+        <p class="muted"><strong>Empresas:</strong> preço sob consulta. Fale connosco por <a href="mailto:{{email}}">e-mail</a> ou <a href="https://wa.me/{{whatsapp}}" target="_blank" rel="noopener">WhatsApp</a>.</p>
         <p class="muted">Dúvidas? Ligue ou envie WhatsApp para <a href="tel:{{phone_link}}">{{phone}}</a>.</p>
       </aside>
     </div>

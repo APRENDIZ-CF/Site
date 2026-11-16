@@ -11,7 +11,6 @@
   var MAX_BYTES = 3 * 1024 * 1024;
 
   var $ = function (s, el) { return (el || document).querySelector(s); };
-  var passoEmp = $("#passo-empresa");
   var passoDados = $("#passo-dados"), passoPag = $("#passo-pagamento"), passoComp = $("#passo-comprovativo");
   var fInsc = $("#form-inscricao"), fComp = $("#form-comprovativo");
   if (!fInsc || !fComp) return;
@@ -64,26 +63,25 @@
   var sel = $("#i-curso");
   if (curso) Array.prototype.forEach.call(sel.options, function (o) { if (o.value === curso) sel.value = curso; });
 
-  /* Particular / Empresa e preço da formação escolhida */
-  var precos = null, precoEl = $("#i-preco"), empField = $("#i-empresa-field"), empInput = $("#i-empresa");
+  /* Preço da formação escolhida */
+  var precos = null, precoEl = $("#i-preco");
   var btnInsc = $('[type="submit"]', fInsc);
-  function isEmpresa() { var r = fInsc.querySelector('[name="tipo"]:checked'); return r && r.value === "Empresa"; }
   function atualizar() {
-    var emp = isEmpresa();
-    empField.hidden = !emp; empInput.disabled = !emp; empInput.required = emp;
-    btnInsc.textContent = btnInsc.getAttribute(emp ? "data-label-empresa" : "data-label-particular");
-    var v = precos && sel.value ? precos[sel.value] : null;
-    if (!sel.value) { precoEl.hidden = true; return; }
-    precoEl.textContent = emp ? "Empresas: valor sob consulta" : (v ? "Valor: " + v : "Valor a confirmar");
-    precoEl.hidden = !(emp || precos);
+    if (!sel.value || !precos) { precoEl.hidden = true; return; }
+    var v = precos[sel.value];
+    precoEl.textContent = "Valor (particulares): " + (v || "a confirmar") + (/hora/.test(v || "") ? " — o total depende do nº de horas; confirmamos por e-mail" : "");
+    precoEl.hidden = false;
   }
   sel.addEventListener("change", atualizar);
-  fInsc.querySelectorAll('[name="tipo"]').forEach(function (r) { r.addEventListener("change", atualizar); });
   fetch("/api/inscricao", { headers: { Accept: "application/json" } })
     .then(function (r) { return r.json(); })
     .then(function (j) { if (j && j.precos) { precos = j.precos; atualizar(); } })
     .catch(function () {});
-  atualizar();
+
+  /* Data de hoje (só leitura) e data mínima da formação */
+  var hoje = new Date(); hoje.setMinutes(hoje.getMinutes() - hoje.getTimezoneOffset());
+  $("#i-hoje").value = hoje.toISOString().slice(0, 10);
+  $("#i-data").min = hoje.toISOString().slice(0, 10);
 
   function mostrarPagamento(p) {
     passoPag.querySelectorAll("[data-pay]").forEach(function (el) { el.textContent = p[el.getAttribute("data-pay")] || ""; });
@@ -108,10 +106,6 @@
     new FormData(fInsc).forEach(function (v, k) { data[k] = v; });
     post(fInsc.getAttribute("data-endpoint"), data)
       .then(function (r) {
-        if (r.empresa) {
-          passoDados.hidden = true; passoEmp.hidden = false; $("h2", passoEmp).focus();
-          return;
-        }
         var p = { codigo: r.codigo, iban: r.iban, titular: r.titular, banco: r.banco, valor: r.valor, formacao: data.formacao, nome: data.nome, email: data.email };
         store.set(p);
         mostrarPagamento(p);

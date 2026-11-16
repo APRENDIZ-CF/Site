@@ -5,6 +5,7 @@
  *
  * - IBAN, TITULAR e BANCO: dados da conta que recebe os pagamentos.
  * - PRECOS: valor de cada formação para PARTICULARES, em Kwanzas (número inteiro, sem pontos).
+ *   Também aceita texto (ex.: "17.000 Kz / hora") para preços por hora.
  *   Fonte: "Tabela de Preços – Aulas em grupo para particulares". Empresas: sob consulta.
  *   Se uma formação não tiver preço (ou for null), o aluno vê "valor a confirmar"
  *   e a Aprendiz envia o valor depois, por e-mail ou WhatsApp.
@@ -37,8 +38,13 @@ const PRECOS = {
   "PowerPoint do Básico ao Intermédio": 90000,
   "PowerPoint Avançado": 80000,
   "Informática": 45000,
+  "Contabilidade para Empreendedores": 30000,
+  "Workshop Regime Jurídico das Facturas": 15000,
+  // Formações privadas: preço por hora (texto). O total depende do nº de horas e é confirmado depois.
+  "Formação Privada – Análise de Dados I Aplicada ao Excel": "17.000 Kz / hora",
+  "Formação Privada – Outras Formações": "15.000 Kz / hora",
 };
 
-const formatKz = (n) => (typeof n === "number" ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " Kz" : null);
+const formatKz = (n) => (typeof n === "string" ? n : typeof n === "number" ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " Kz" : null);
 
 module.exports = { IBAN, TITULAR, BANCO, PRECOS, formatKz };

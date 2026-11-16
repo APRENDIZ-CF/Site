@@ -925,11 +925,12 @@ h1, .page-hero h1 { font-weight: 600; }
 .pay-steps li { counter-increment: s; position: relative; padding: 14px 0 14px 46px; border-bottom: 1px solid var(--line); font-size: .98rem; }
 .pay-steps li::before { content: counter(s); position: absolute; left: 0; top: 14px; width: 30px; height: 30px; border-radius: 50%; background: var(--green); color: #fff; font-size: .85rem; display: grid; place-items: center; }
 .pay-steps strong { color: var(--green); font-weight: 500; }
-#passo-empresa[hidden], #i-empresa-field[hidden], .pay-price[hidden] { display: none; }
-#passo-empresa h2:focus { outline: none; }
-.field__label { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--green); font-weight: 500; margin-bottom: 10px; }
-.pay-tipo { display: flex; flex-wrap: wrap; gap: 10px 28px; }
-.field .pay-tipo label { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 1rem; letter-spacing: 0; text-transform: none; font-weight: 400; color: var(--text); cursor: pointer; }
-.field .pay-tipo input { -webkit-appearance: radio; appearance: auto; width: 18px; height: 18px; min-height: 0; padding: 0; margin: 0; border: 0; accent-color: var(--green); box-shadow: none; }
-.field .pay-tipo small { color: var(--muted); font-size: .85rem; letter-spacing: 0; text-transform: none; }
+#i-preco[hidden] { display: none; }
+.field.terms { padding: 18px 20px; background: var(--offwhite); border-left: 2px solid var(--green); }
+.field.terms.has-error { border-left-color: #B3261E; }
+.field .terms__check { display: flex; align-items: flex-start; gap: 12px; margin: 0; font-size: .98rem; letter-spacing: 0; text-transform: none; font-weight: 500; color: var(--green); cursor: pointer; }
+.field .terms__check input { -webkit-appearance: checkbox; appearance: auto; width: 18px; height: 18px; min-height: 0; padding: 0; margin: 4px 0 0; border: 0; box-shadow: none; accent-color: var(--green); flex-shrink: 0; }
+.terms__list { margin: 10px 0 0 30px; padding-left: 18px; font-size: .9rem; color: var(--text); line-height: 1.6; }
+.terms__list li { margin-bottom: 4px; }
+.field input[readonly] { color: var(--muted); border-bottom-style: dashed; }
 .pay-price { margin: 10px 0 0; font-size: .95rem; color: var(--green); font-weight: 500; }

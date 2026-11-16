@@ -6,8 +6,7 @@
  * 3. Envia um e-mail ao aluno com o IBAN, o valor e o código a pôr no descritivo.
  * 4. Devolve ao site os dados de pagamento para mostrar no ecrã.
  *
- * Empresas: preço sob consulta — não há passo de pagamento; a Aprendiz recebe o
- * pedido por e-mail e envia a proposta por e-mail ou WhatsApp.
+ * Empresas: preço sob consulta, tratado por e-mail/WhatsApp (fora deste formulário).
  * GET /api/inscricao devolve os preços (para mostrar no formulário).
  *
  * Dados bancários e preços: api/_pagamento.js
@@ -41,20 +40,22 @@ module.exports = async (req, res) => {
   if (body.website) return res.status(200).json({ ok: true }); // anti-spam
 
   const s = (k, max = 300) => String(body[k] || "").trim().slice(0, max);
-  const nome = s("nome"), email = s("email"), telefone = s("telefone", 40), empresa = s("empresa");
-  const formacao = s("formacao"), modalidade = s("modalidade", 40), obs = s("mensagem", 2000);
-  const isEmpresa = s("tipo", 20) === "Empresa";
+  const nome = s("nome"), email = s("email"), telefone = s("telefone", 40);
+  const formacao = s("formacao"), modalidade = s("modalidade", 40);
+  const documento = s("documento", 40), dataFormacao = s("data_formacao", 10), horario = s("horario", 60);
+  const aceitaCancel = s("aceita_cancelamento", 5) === "Sim", aceitaRegras = s("aceita_regras", 5) === "Sim";
+  const hoje = new Date(Date.now() + 60 * 60 * 1000).toISOString().slice(0, 10); // Luanda
+  const fmtData = (d) => (/^\d{4}-\d{2}-\d{2}$/.test(d) ? d.split("-").reverse().join("/") : d);
 
   if (!nome || !EMAIL_RE.test(email)) return res.status(400).json({ ok: false, error: "Nome e e-mail válidos são obrigatórios." });
   if (!telefone) return res.status(400).json({ ok: false, error: "O telefone é obrigatório." });
-  if (isEmpresa && !empresa) return res.status(400).json({ ok: false, error: "Indique o nome da empresa." });
+  if (!["Presencial", "Online"].includes(modalidade)) return res.status(400).json({ ok: false, error: "Escolha a modalidade." });
+  if (!aceitaCancel || !aceitaRegras) return res.status(400).json({ ok: false, error: "É necessário concordar com as condições." });
   if (!Object.prototype.hasOwnProperty.call(PRECOS, formacao)) return res.status(400).json({ ok: false, error: "Escolha uma formação da lista." });
   if (!mailConfigured()) {
     console.error("Inscrição recebida mas nenhum serviço de e-mail está configurado.", { nome, email, formacao });
     return res.status(503).json({ ok: false, error: "Serviço de e-mail não configurado." });
   }
-
-  if (isEmpresa) return inscricaoEmpresa(res, { nome, email, telefone, empresa, formacao, modalidade, obs });
 
   const codigo = novoCodigo();
   const valor = formatKz(PRECOS[formacao]);
@@ -63,7 +64,9 @@ module.exports = async (req, res) => {
   // --- E-mail para a Aprendiz ---
   const rows = [
     ["Código", codigo], ["Formação", formacao], ["Modalidade", modalidade], ["Valor", valor || "a confirmar"],
-    ["Nome", nome], ["Empresa", empresa], ["E-mail", email], ["Telefone", telefone], ["Observações", obs],
+    ["Nome completo", nome], ["E-mail", email], ["Telefone", telefone], ["Nº documento de identificação", documento],
+    ["Data da formação", fmtData(dataFormacao)], ["Horário da formação", horario],
+    ["Condições de cancelamento", "Concorda"], ["Regras da formação", "Concorda"], ["Data da inscrição", fmtData(hoje)],
     ["Estado", "Pendente – aguarda comprovativo de transferência"],
   ].filter(([, v]) => v);
   try {
@@ -108,38 +111,3 @@ module.exports = async (req, res) => {
   return res.status(200).json({ ok: true, ...pagamento });
 };
 
-/** Empresas: preço sob consulta. Avisa a Aprendiz e confirma a receção ao cliente. */
-async function inscricaoEmpresa(res, d) {
-  const rows = [
-    ["Tipo", "Empresa – preço sob consulta"], ["Empresa", d.empresa], ["Formação", d.formacao], ["Modalidade", d.modalidade],
-    ["Nome", d.nome], ["E-mail", d.email], ["Telefone", d.telefone], ["Observações", d.obs],
-  ].filter(([, v]) => v);
-  try {
-    await sendMail({
-      to: ADMIN_TO(), replyTo: d.email,
-      subject: `[Inscrição Empresa] ${d.formacao} – ${d.empresa}`,
-      text: rows.map(([k, v]) => `${k}: ${v}`).join("\n") + "\n\nEnviar proposta ao cliente por e-mail ou WhatsApp.",
-      html: table("Pedido de inscrição – Empresa", rows) +
-        `<p style="font-family:Arial,sans-serif;font-size:14px">Enviar proposta ao cliente por e-mail ou WhatsApp.</p>`,
-    });
-  } catch (err) {
-    console.error("Erro ao enviar e-mail de inscrição (empresa):", err);
-    return res.status(502).json({ ok: false, error: "Falha no envio." });
-  }
-  try {
-    await sendMail({
-      to: d.email, replyTo: ADMIN_TO(),
-      subject: `Pedido de inscrição – ${d.formacao} | Aprendiz`,
-      text: `Olá ${d.nome},\n\nRecebemos o pedido de inscrição da ${d.empresa} na formação ${d.formacao}.\n` +
-        `Para empresas, o valor é sob consulta: vamos enviar-lhe a proposta por e-mail ou WhatsApp brevemente.\n\n` +
-        `Aprendiz – Consultoria & Formação\n+244 923 35 35 34`,
-      html: `<p style="font-family:Arial,sans-serif;font-size:15px">Olá ${esc(d.nome)},</p>` +
-        `<p style="font-family:Arial,sans-serif;font-size:15px">Recebemos o pedido de inscrição da <b>${esc(d.empresa)}</b> na formação <b>${esc(d.formacao)}</b>.</p>` +
-        `<p style="font-family:Arial,sans-serif;font-size:15px">Para empresas, o valor é sob consulta: vamos enviar-lhe a proposta por e-mail ou WhatsApp brevemente.</p>` +
-        `<p style="font-family:Arial,sans-serif;font-size:15px">Aprendiz – Consultoria &amp; Formação<br>+244 923 35 35 34</p>`,
-    });
-  } catch (err) {
-    console.error("Erro ao enviar e-mail ao cliente (empresa):", err);
-  }
-  return res.status(200).json({ ok: true, empresa: true });
-}
