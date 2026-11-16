@@ -41,7 +41,7 @@ module.exports = async (req, res) => {
 
   const s = (k, max = 300) => String(body[k] || "").trim().slice(0, max);
   const nome = s("nome"), email = s("email"), telefone = s("telefone", 40);
-  const formacao = s("formacao"), modalidade = s("modalidade", 40);
+  const formacao = s("formacao"), modalidade = s("modalidade", 40), tema = s("tema", 120);
   const documento = s("documento", 40), dataFormacao = s("data_formacao", 10), horario = s("horario", 60);
   const aceitaCancel = s("aceita_cancelamento", 5) === "Sim", aceitaRegras = s("aceita_regras", 5) === "Sim";
   const hoje = new Date(Date.now() + 60 * 60 * 1000).toISOString().slice(0, 10); // Luanda
@@ -50,6 +50,7 @@ module.exports = async (req, res) => {
   if (!nome || !EMAIL_RE.test(email)) return res.status(400).json({ ok: false, error: "Nome e e-mail válidos são obrigatórios." });
   if (!telefone) return res.status(400).json({ ok: false, error: "O telefone é obrigatório." });
   if (!["Presencial", "Online"].includes(modalidade)) return res.status(400).json({ ok: false, error: "Escolha a modalidade." });
+  if (/^Formação Privada – Plano /.test(formacao) && !tema) return res.status(400).json({ ok: false, error: "Indique o tema das aulas privadas." });
   if (!aceitaCancel || !aceitaRegras) return res.status(400).json({ ok: false, error: "É necessário concordar com as condições." });
   if (!Object.prototype.hasOwnProperty.call(PRECOS, formacao)) return res.status(400).json({ ok: false, error: "Escolha uma formação da lista." });
   if (!mailConfigured()) {
@@ -63,7 +64,7 @@ module.exports = async (req, res) => {
 
   // --- E-mail para a Aprendiz ---
   const rows = [
-    ["Código", codigo], ["Formação", formacao], ["Modalidade", modalidade], ["Valor", valor || "a confirmar"],
+    ["Código", codigo], ["Formação", formacao], ["Tema (aulas privadas)", tema], ["Modalidade", modalidade], ["Valor", valor || "a confirmar"],
     ["Nome completo", nome], ["E-mail", email], ["Telefone", telefone], ["Nº documento de identificação", documento],
     ["Data da formação", fmtData(dataFormacao)], ["Horário da formação", horario],
     ["Condições de cancelamento", "Concorda"], ["Regras da formação", "Concorda"], ["Data da inscrição", fmtData(hoje)],
@@ -83,7 +84,7 @@ module.exports = async (req, res) => {
 
   // --- E-mail para o aluno (não bloqueia a inscrição se falhar) ---
   const passos = [
-    ["Formação", formacao], ["Valor a pagar", valor || "a confirmar pela Aprendiz"],
+    ["Formação", formacao], ["Tema", tema], ["Valor a pagar", valor || "a confirmar pela Aprendiz"],
     ["IBAN", IBAN], ["Titular", TITULAR], ["Banco", BANCO], ["Descritivo / referência", codigo],
   ].filter(([, v]) => v);
   try {

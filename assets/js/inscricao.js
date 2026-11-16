@@ -66,13 +66,17 @@
   /* Preço da formação escolhida */
   var precos = null, precoEl = $("#i-preco");
   var btnInsc = $('[type="submit"]', fInsc);
+  var temaField = $("#i-tema-field"), temaInput = $("#i-tema");
   function atualizar() {
+    var plano = /^Formação Privada – Plano /.test(sel.value);
+    temaField.hidden = !plano; temaInput.disabled = !plano; temaInput.required = plano;
     if (!sel.value || !precos) { precoEl.hidden = true; return; }
     var v = precos[sel.value];
     precoEl.textContent = "Valor (particulares): " + (v || "a confirmar") + (/hora/.test(v || "") ? " — o total depende do nº de horas; confirmamos por e-mail" : "");
     precoEl.hidden = false;
   }
   sel.addEventListener("change", atualizar);
+  atualizar();
   fetch("/api/inscricao", { headers: { Accept: "application/json" } })
     .then(function (r) { return r.json(); })
     .then(function (j) { if (j && j.precos) { precos = j.precos; atualizar(); } })

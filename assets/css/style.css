@@ -934,3 +934,12 @@ h1, .page-hero h1 { font-weight: 600; }
 .terms__list li { margin-bottom: 4px; }
 .field input[readonly] { color: var(--muted); border-bottom-style: dashed; }
 .pay-price { margin: 10px 0 0; font-size: .95rem; color: var(--green); font-weight: 500; }
+.price-plans { width: 100%; border-collapse: collapse; margin: 6px 0 18px; font-size: .88rem; }
+.price-plans caption { text-align: left; font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--orange-dark); font-weight: 500; padding-bottom: 6px; }
+.price-plans th, .price-plans td { padding: 6px 4px; border-bottom: 1px solid var(--line); text-align: right; font-weight: 300; white-space: nowrap; }
+.price-plans thead th { font-weight: 500; color: var(--green); font-size: .78rem; }
+.price-plans th[scope="row"], .price-plans thead th:first-child { text-align: left; }
+.price-plans td:last-child { color: var(--green); font-weight: 500; }
+.price-plans__note { font-size: .85rem; color: var(--muted); }
+.price-plans__note a { color: var(--orange-dark); text-decoration: underline; }
+#i-tema-field[hidden] { display: none; }
