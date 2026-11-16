@@ -37,6 +37,7 @@ SITE = {
     "whatsapp": "244923353534",                   # só dígitos, com indicativo
     "email": "jdsaprendiz@gmail.com",
     "facebook": "https://www.facebook.com/share/1EQHuuKDxi/?mibextid=wwXIfr",
+    "youtube": "https://www.youtube.com/@Aprendiz_2021",
     "address": "Rua Cónego Manuel das Neves, Prédio 5, Porta 9 – Kinaxixi, Luanda",
     "map_query": "-8.8152712,13.2409689",
     "map_link": "https://www.google.com/maps/dir/?api=1&amp;destination=-8.8152712%2C13.2409689",
