@@ -834,3 +834,11 @@ h1, .page-hero h1 { font-weight: 600; }
 .contact-cards__actions a + a:hover { background: #1F8F4E; color: #fff; }
 .contact-cards__box .k, .contact-cards__box .v--big { grid-column: 2; }
 .contact-cards li:not(.contact-cards__main) .v--big { white-space: normal; overflow-wrap: anywhere; }
+
+/* ---------- 32. Páginas internas: cabeçalho verde (sem fotografia) ---------- */
+.site-header.no-hero { background: var(--green); box-shadow: 0 6px 24px rgba(0, 0, 0, .12); }
+.site-header.no-hero .logo-light { display: block; }
+.site-header.no-hero .logo-dark { display: none; }
+.no-hero .main-nav a { color: #fff; }
+.no-hero .main-nav a:hover { color: #F3B79F; }
+.no-hero .nav-toggle span { background: #fff; }
