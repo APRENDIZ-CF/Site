@@ -39,19 +39,32 @@ hero: false
                 <optgroup label="Word"><option>Word Básico</option><option>Word Intermédio</option><option>Word Avançado</option></optgroup>
                 <optgroup label="PowerPoint"><option>PowerPoint do Básico ao Intermédio</option><option>PowerPoint Avançado</option></optgroup>
                 <option>Informática</option>
-              </select><span class="error-msg" aria-live="polite"></span></div>
+              </select><span class="error-msg" aria-live="polite"></span>
+              <p class="pay-price" id="i-preco" aria-live="polite" hidden></p></div>
+            <div class="field full"><span class="field__label" id="i-tipo-l">Inscrição como <span class="req">*</span></span>
+              <div class="pay-tipo" role="radiogroup" aria-labelledby="i-tipo-l">
+                <label><input type="radio" name="tipo" value="Particular" checked> Particular</label>
+                <label><input type="radio" name="tipo" value="Empresa"> Empresa <small>(preço sob consulta)</small></label>
+              </div></div>
+            <div class="field full" id="i-empresa-field" hidden><label for="i-empresa">Nome da empresa <span class="req">*</span></label><input id="i-empresa" name="empresa" autocomplete="organization" disabled><span class="error-msg" aria-live="polite"></span></div>
             <div class="field"><label for="i-nome">Nome completo <span class="req">*</span></label><input id="i-nome" name="nome" autocomplete="name" required><span class="error-msg" aria-live="polite"></span></div>
             <div class="field"><label for="i-email">E-mail <span class="req">*</span></label><input id="i-email" name="email" type="email" autocomplete="email" required><span class="error-msg" aria-live="polite"></span></div>
             <div class="field"><label for="i-tel">Telefone / WhatsApp <span class="req">*</span></label><input id="i-tel" name="telefone" type="tel" autocomplete="tel" pattern="[0-9 +()\-]{9,}" required><span class="error-msg" aria-live="polite"></span></div>
             <div class="field"><label for="i-mod">Modalidade</label>
               <select id="i-mod" name="modalidade"><option>Presencial</option><option>Online</option></select><span class="error-msg"></span></div>
-            <div class="field full"><label for="i-empresa">Empresa (se a fatura for em nome da empresa)</label><input id="i-empresa" name="empresa" autocomplete="organization"><span class="error-msg"></span></div>
             <div class="field full"><label for="i-msg">Observações</label><textarea id="i-msg" name="mensagem"></textarea><span class="error-msg"></span></div>
             <label class="consent full"><input type="checkbox" name="consentimento" required> Autorizo a Aprendiz a utilizar os meus dados para gerir esta inscrição.</label>
-            <div class="full"><button class="btn btn--primary" type="submit">Continuar para o pagamento</button></div>
+            <div class="full"><button class="btn btn--primary" type="submit" data-label-particular="Continuar para o pagamento" data-label-empresa="Pedir proposta">Continuar para o pagamento</button></div>
             <p class="form-status" role="status" tabindex="-1" hidden></p>
           </form>
           <p class="muted pay-already">Já se inscreveu e tem um código? <a href="#passo-comprovativo" data-show-comprovativo>Enviar comprovativo</a></p>
+        </div>
+
+        <!-- Empresas: pedido recebido (sem pagamento online) -->
+        <div id="passo-empresa" hidden>
+          <h2 tabindex="-1">Pedido recebido.</h2>
+          <p>Obrigado! Para empresas, o valor da formação é <strong>sob consulta</strong>. Vamos enviar a proposta por e-mail ou WhatsApp brevemente.</p>
+          <p class="pay-actions"><a class="btn btn--outline" href="https://wa.me/{{whatsapp}}" target="_blank" rel="noopener">Falar pelo WhatsApp</a></p>
         </div>
 
         <!-- Passo 2: dados para pagamento (preenchido depois do passo 1) -->
@@ -95,6 +108,7 @@ hero: false
           <li><strong>Envie o comprovativo.</strong> Carregue o PDF ou a foto do comprovativo aqui, ou envie pelo WhatsApp.</li>
           <li><strong>Vaga confirmada.</strong> Validamos o pagamento e confirmamos a sua vaga por e-mail.</li>
         </ol>
+        <p class="muted"><strong>Empresas:</strong> preço sob consulta. Escolha "Empresa" no formulário ou fale connosco por <a href="mailto:{{email}}">e-mail</a> ou <a href="https://wa.me/{{whatsapp}}" target="_blank" rel="noopener">WhatsApp</a>.</p>
         <p class="muted">Dúvidas? Ligue ou envie WhatsApp para <a href="tel:{{phone_link}}">{{phone}}</a>.</p>
       </aside>
     </div>

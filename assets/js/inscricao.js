@@ -11,6 +11,7 @@
   var MAX_BYTES = 3 * 1024 * 1024;
 
   var $ = function (s, el) { return (el || document).querySelector(s); };
+  var passoEmp = $("#passo-empresa");
   var passoDados = $("#passo-dados"), passoPag = $("#passo-pagamento"), passoComp = $("#passo-comprovativo");
   var fInsc = $("#form-inscricao"), fComp = $("#form-comprovativo");
   if (!fInsc || !fComp) return;
@@ -36,7 +37,7 @@
   function validate(form) {
     var first = null;
     form.querySelectorAll("input:not([type=hidden]), select, textarea").forEach(function (i) {
-      if (i.closest(".hp-field")) return;
+      if (i.closest(".hp-field") || i.disabled) return;
       if (!check(i) && !first) first = i;
     });
     if (first) first.focus();
@@ -63,6 +64,27 @@
   var sel = $("#i-curso");
   if (curso) Array.prototype.forEach.call(sel.options, function (o) { if (o.value === curso) sel.value = curso; });
 
+  /* Particular / Empresa e preço da formação escolhida */
+  var precos = null, precoEl = $("#i-preco"), empField = $("#i-empresa-field"), empInput = $("#i-empresa");
+  var btnInsc = $('[type="submit"]', fInsc);
+  function isEmpresa() { var r = fInsc.querySelector('[name="tipo"]:checked'); return r && r.value === "Empresa"; }
+  function atualizar() {
+    var emp = isEmpresa();
+    empField.hidden = !emp; empInput.disabled = !emp; empInput.required = emp;
+    btnInsc.textContent = btnInsc.getAttribute(emp ? "data-label-empresa" : "data-label-particular");
+    var v = precos && sel.value ? precos[sel.value] : null;
+    if (!sel.value) { precoEl.hidden = true; return; }
+    precoEl.textContent = emp ? "Empresas: valor sob consulta" : (v ? "Valor: " + v : "Valor a confirmar");
+    precoEl.hidden = !(emp || precos);
+  }
+  sel.addEventListener("change", atualizar);
+  fInsc.querySelectorAll('[name="tipo"]').forEach(function (r) { r.addEventListener("change", atualizar); });
+  fetch("/api/inscricao", { headers: { Accept: "application/json" } })
+    .then(function (r) { return r.json(); })
+    .then(function (j) { if (j && j.precos) { precos = j.precos; atualizar(); } })
+    .catch(function () {});
+  atualizar();
+
   function mostrarPagamento(p) {
     passoPag.querySelectorAll("[data-pay]").forEach(function (el) { el.textContent = p[el.getAttribute("data-pay")] || ""; });
     if (!p.valor) $('[data-pay="valor"]', passoPag).textContent = "A confirmar (enviamos o valor por e-mail/WhatsApp)";
@@ -81,11 +103,15 @@
     e.preventDefault();
     status(fInsc, "");
     if (!validate(fInsc)) return;
-    var btn = $('[type="submit"]', fInsc); btn.disabled = true;
+    var btn = btnInsc; btn.disabled = true;
     var data = {};
     new FormData(fInsc).forEach(function (v, k) { data[k] = v; });
     post(fInsc.getAttribute("data-endpoint"), data)
       .then(function (r) {
+        if (r.empresa) {
+          passoDados.hidden = true; passoEmp.hidden = false; $("h2", passoEmp).focus();
+          return;
+        }
         var p = { codigo: r.codigo, iban: r.iban, titular: r.titular, banco: r.banco, valor: r.valor, formacao: data.formacao, nome: data.nome, email: data.email };
         store.set(p);
         mostrarPagamento(p);
