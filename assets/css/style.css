@@ -1069,3 +1069,32 @@ h1, .page-hero h1 { font-weight: 600; }
   .svc-index a { white-space: normal; border-radius: 14px; padding: 12px 14px; font-size: .95rem; line-height: 1.25; height: 100%; }
   .svc-index a svg { margin-left: auto; flex-shrink: 0; }
 }
+
+/* ---------- Tipo de letra Cinzel (o do "APRENDIZ") nos títulos; letras, logótipo e redes sociais maiores ---------- */
+:root { --serif: "Cinzel", "Cormorant Garamond", Georgia, serif; }
+h1, h2, h3, h4 { font-family: var(--display); font-weight: 500; letter-spacing: .02em; }
+h1, .page-hero h1 { font-weight: 500; font-size: clamp(2.1rem, 5.2vw, 4.4rem); }
+h2 { font-size: clamp(1.75rem, 3.6vw, 3rem); }
+h3 { font-size: clamp(1.3rem, 2vw, 1.75rem); }
+/* textos em itálico continuam no tipo de letra clássico (a Cinzel não tem itálico) */
+.hero__claim, .quote p { font-family: "Cormorant Garamond", Georgia, serif; }
+/* texto corrido um pouco maior */
+body { font-size: 1.125rem; }
+.lead { font-size: clamp(1.15rem, 1.6vw, 1.35rem); }
+/* menu */
+.main-nav a { font-size: 1.02rem; }
+@media (min-width: 1180px) and (max-width: 1500px) { .main-nav a { font-size: .92rem; } }
+@media (min-width: 1180px) and (max-width: 1320px) { .main-nav a { font-size: .84rem; } }
+/* logótipo */
+.brand img { height: 86px; }
+.site-header.is-solid .brand img, .site-header.no-hero .brand img { height: 74px; }
+@media (max-width: 599px) { .brand img, .site-header.is-solid .brand img, .site-header.no-hero .brand img { height: 62px; } }
+.f-brand img { height: 124px; }
+/* redes sociais */
+.socials a { width: 48px; height: 48px; }
+.socials svg { width: 20px; height: 20px; }
+.header-social .socials a { width: 44px; height: 44px; }
+.header-social .socials svg { width: 20px; height: 20px; }
+@media (min-width: 1180px) and (max-width: 1500px) { .header-social .socials a { width: 40px; height: 40px; } .header-social .socials svg { width: 18px; height: 18px; } }
+@media (min-width: 1180px) and (max-width: 1320px) { .header-social .socials a { width: 36px; height: 36px; } }
+.main-nav ul > li { display: flex; align-items: center; }
