@@ -48,7 +48,7 @@ NAV = [
     ("inicio", "Início", "index.html"),
     ("sobre", "Sobre", "sobre.html"),
     ("consultoria", "Consultoria", "consultoria.html"),
-    ("formacoes", "Formações", "formacoes.html"),
+    ("formacoes", "Formações", "formacoes.html"),  # submenu em NAV_SUB
     ("sala", "Aluguer de Sala", "aluguer-sala.html"),
     ("escritorios", "Escritórios", "escritorios.html"),
     ("contactos", "Contactos", "contactos.html"),
@@ -164,12 +164,39 @@ def parse_page(path):
     return meta, raw[m.end():]
 
 
-def nav_items(active, mobile=False):
+# Submenus (seta ao lado do item do menu que abre uma lista)
+NAV_SUB = {
+    "formacoes": [
+        ("Formações Singulares", "formacoes.html"),
+        ("Formações Empresas", "formacoes-empresas.html"),
+        ("Formações Privadas", "formacoes-privadas.html"),
+    ],
+}
+
+CHEVRON = ('<svg viewBox="0 0 12 8" width="12" height="8" fill="none" stroke="currentColor" '
+           'stroke-width="1.5" aria-hidden="true"><path d="M1 1.5l5 5 5-5"/></svg>')
+
+
+def nav_items(active, mobile=False, slug=""):
     out = []
+    pad = "      " if mobile else "        "
     for key, label, href in NAV:
         cur = ' aria-current="page"' if key == active else ""
-        pad = "      " if mobile else "        "
-        out.append(f'{pad}<li><a href="{href}"{cur}>{label}</a></li>')
+        sub = NAV_SUB.get(key)
+        if not sub:
+            out.append(f'{pad}<li><a href="{href}"{cur}>{label}</a></li>')
+            continue
+        sub_cur = ' aria-current="page"'
+        items = "".join(
+            f'<li><a href="{h}"{sub_cur if h == slug else ""}>{l}</a></li>' for l, h in sub)
+        if mobile:
+            out.append(f'{pad}<li class="mm-has-sub"><a href="{href}"{cur}>{label}</a><ul class="mm-sub">{items}</ul></li>')
+        else:
+            out.append(
+                f'{pad}<li class="has-sub"><a href="{href}"{cur}>{label}</a>'
+                f'<button class="sub-toggle" type="button" aria-expanded="false" aria-controls="sub-{key}" '
+                f'aria-label="Abrir submenu {label}">{CHEVRON}</button>'
+                f'<ul class="subnav" id="sub-{key}">{items}</ul></li>')
     return "\n".join(out)
 
 
@@ -236,8 +263,8 @@ def build():
         hero = meta.get("hero", "false") == "true"
         header = (header_t
                   .replace("{{header_class}}", "" if hero else " no-hero")
-                  .replace("{{nav_desktop}}", nav_items(active))
-                  .replace("{{nav_mobile}}", nav_items(active, mobile=True)))
+                  .replace("{{nav_desktop}}", nav_items(active, slug=page.name))
+                  .replace("{{nav_mobile}}", nav_items(active, mobile=True, slug=page.name)))
         slug = page.name
         url = SITE["url"] + "/" + ("" if slug == "index.html" else slug[:-5])
         html = PAGE_TMPL.format(

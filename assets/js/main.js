@@ -56,6 +56,30 @@
     img.addEventListener("error", function () { img.parentElement.classList.add("img-fallback"); });
   });
 
+  /* ---- Submenus do menu principal (seta) ---- */
+  var subs = document.querySelectorAll(".has-sub");
+  function closeSubs(except) {
+    subs.forEach(function (li) {
+      if (li === except) return;
+      li.classList.remove("open");
+      var b = li.querySelector(".sub-toggle"); if (b) b.setAttribute("aria-expanded", "false");
+    });
+  }
+  subs.forEach(function (li) {
+    var b = li.querySelector(".sub-toggle");
+    if (!b) return;
+    b.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var open = !li.classList.contains("open");
+      closeSubs(li);
+      li.classList.toggle("open", open);
+      b.setAttribute("aria-expanded", String(open));
+    });
+    li.addEventListener("focusout", function (e) { if (!li.contains(e.relatedTarget)) closeSubs(); });
+  });
+  document.addEventListener("click", function (e) { if (!e.target.closest(".has-sub")) closeSubs(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeSubs(); });
+
   /* ---- Filtros de formações ---- */
   var filterBtns = document.querySelectorAll(".filter-btn");
   var courses = document.querySelectorAll(".course[data-cat]");
