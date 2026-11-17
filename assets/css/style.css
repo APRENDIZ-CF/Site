@@ -1009,3 +1009,13 @@ h1, .page-hero h1 { font-weight: 600; }
 /* ---------- Menos espaço entre o cabeçalho da página e o primeiro bloco ---------- */
 .page-hero { padding-bottom: clamp(20px, 2.4vw, 32px); }
 .page-hero + section { padding-top: clamp(24px, 2.6vw, 36px); }
+
+/* ---------- Início: fotografia com mais vida (verde só onde está o texto) ---------- */
+.hero__media img { filter: saturate(1.2) contrast(1.06) brightness(1.04); }
+.hero::before {
+  opacity: 1;
+  background: linear-gradient(90deg, rgba(13,58,1,.82) 0%, rgba(13,58,1,.62) 35%, rgba(13,58,1,.22) 65%, rgba(13,58,1,.05) 100%);
+}
+@media (max-width: 899px) {
+  .hero::before { background: linear-gradient(180deg, rgba(13,58,1,.3) 0%, rgba(13,58,1,.5) 45%, rgba(13,58,1,.15) 100%); }
+}
