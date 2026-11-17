@@ -52,8 +52,7 @@ NAV = [
     ("sobre", "Sobre", "sobre.html"),
     ("consultoria", "Consultoria", "consultoria.html"),
     ("formacoes", "Formações", "formacoes.html"),  # submenu em NAV_SUB
-    ("sala", "Aluguer de Sala", "aluguer-sala.html"),
-    ("escritorios", "Escritórios", "escritorios.html"),
+    ("aluguer", "Aluguer", "aluguer.html"),  # submenu em NAV_SUB
     ("contactos", "Contactos", "contactos.html"),
 ]
 
@@ -173,6 +172,10 @@ NAV_SUB = {
         ("Formações Singulares", "formacoes.html"),
         ("Formações Empresas", "formacoes-empresas.html"),
         ("Formações Privadas", "formacoes-privadas.html"),
+    ],
+    "aluguer": [
+        ("Aluguer de Sala", "aluguer-sala.html"),
+        ("Escritórios", "escritorios.html"),
     ],
 }
 

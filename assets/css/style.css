@@ -1019,3 +1019,20 @@ h1, .page-hero h1 { font-weight: 600; }
 @media (max-width: 899px) {
   .hero::before { background: linear-gradient(180deg, rgba(13,58,1,.3) 0%, rgba(13,58,1,.5) 45%, rgba(13,58,1,.15) 100%); }
 }
+
+/* ---------- Início: verde só na faixa de cima (menu); fotografia limpa ---------- */
+.hero::before { opacity: 1; background: linear-gradient(90deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,0) 72%); }
+@media (max-width: 899px) { .hero::before { background: linear-gradient(180deg, rgba(0,0,0,0) 22%, rgba(0,0,0,.32) 40%, rgba(0,0,0,.32) 72%, rgba(0,0,0,0) 92%); } }
+.hero::after { background: linear-gradient(180deg, rgba(13,58,1,.92) 0, rgba(13,58,1,.75) 70px, rgba(13,58,1,0) 170px); }
+.hero__title, .hero__sub, .hero__claim { text-shadow: 0 2px 18px rgba(0,0,0,.55), 0 1px 3px rgba(0,0,0,.45); }
+.hero .btn--outline-light { background: rgba(0,0,0,.28); }
+
+/* ---------- Página Aluguer ---------- */
+.rent-grid { display: grid; grid-template-columns: 1fr; gap: 28px; }
+@media (min-width: 800px) { .rent-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
+.rent-card { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); transition: box-shadow .4s var(--ease), transform .4s var(--ease); }
+.rent-card:hover { box-shadow: 0 16px 40px rgba(13,58,1,.12); transform: translateY(-3px); }
+.rent-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+.rent-card__body { padding: 28px 28px 32px; }
+.rent-card h2 { font-size: clamp(1.8rem, 2.6vw, 2.4rem); margin-bottom: 10px; }
+.rent-card .link-arrow { margin-top: 8px; }
