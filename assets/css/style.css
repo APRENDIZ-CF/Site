@@ -1059,13 +1059,6 @@ h1, .page-hero h1 { font-weight: 600; }
 
 /* ---------- Páginas internas: o mesmo verde do topo do Início, a desvanecer ---------- */
 .site-header.no-hero { background: linear-gradient(180deg, rgb(32,74,21) 0%, rgb(73,107,64) 100%); box-shadow: none; }
-.page-hero {
-  padding-top: calc(92px + clamp(56px, 6vw, 88px));
-  background: linear-gradient(180deg, rgb(73,107,64) 0, rgb(73,107,64) 92px, rgba(73,107,64,0) 172px);
-}
-@media (max-width: 599px) {
-  .page-hero { padding-top: calc(80px + 64px); background: linear-gradient(180deg, rgb(73,107,64) 0, rgb(73,107,64) 80px, rgba(73,107,64,0) 140px); }
-}
 .svc-index { background: #fff; }
 .svc-index ul li a { color: var(--green); }
 .svc-index ul li a .svc-index__t { color: inherit; }
