@@ -22,6 +22,7 @@ Atalhos disponíveis no conteúdo:
 """
 import json
 import re
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).parent
@@ -228,6 +229,7 @@ def build():
     socials_t = (SRC / "partials/socials.html").read_text(encoding="utf-8").strip()
     header_t = (SRC / "partials/header.html").read_text(encoding="utf-8").replace("{{socials}}", socials_t)
     footer_t = (SRC / "partials/footer.html").read_text(encoding="utf-8").replace("{{socials}}", socials_t)
+    urls = []
     for page in sorted((SRC / "pages").glob("*.html")):
         meta, content = parse_page(page)
         active = meta.get("nav", "")
@@ -245,6 +247,19 @@ def build():
         )
         (ROOT / slug).write_text(render_tokens(html), encoding="utf-8")
         print("✓", slug)
+        urls.append(url)
+
+    # Ficheiros para os motores de pesquisa (Google, Bing…)
+    hoje = date.today().isoformat()
+    sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
+               '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for u in urls:
+        sitemap.append(f"  <url><loc>{u}</loc><lastmod>{hoje}</lastmod></url>")
+    sitemap.append("</urlset>")
+    (ROOT / "sitemap.xml").write_text("\n".join(sitemap) + "\n", encoding="utf-8")
+    (ROOT / "robots.txt").write_text(
+        "User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: " + SITE["url"] + "/sitemap.xml\n", encoding="utf-8")
+    print("✓ sitemap.xml, robots.txt")
 
 
 if __name__ == "__main__":
