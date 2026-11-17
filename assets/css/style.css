@@ -275,8 +275,8 @@ h4 { font-size: 1.35rem; }
 .breadcrumb a:hover { color: var(--orange-dark); }
 .breadcrumb span[aria-hidden] { margin: 0 10px; color: var(--orange); }
 @media (min-width: 900px) {
-  .page-hero h1 { grid-column: 1 / 8; }
-  .page-hero .lead { grid-column: 9 / 13; }
+  .page-hero h1 { grid-column: 1 / -1; }
+  .page-hero .lead { grid-column: 1 / 11; }  /* texto de apresentação na horizontal, por baixo do título */
 }
 
 /* ---------- 8. Figuras e imagens ---------- */
@@ -713,7 +713,7 @@ h4 { font-size: 1.35rem; }
 .btn--icon svg { width: 20px; height: 20px; stroke-width: 1.6; }
 .page-hero__side { grid-column: 1 / -1; }
 .page-hero__side .lead { color: var(--muted); margin-bottom: 24px; }
-@media (min-width: 900px) { .page-hero__side { grid-column: 8 / 13; } }
+@media (min-width: 900px) { .page-hero__side { grid-column: 1 / 11; } }
 
 .booking-band { background: var(--green); color: rgba(255,255,255,.88); position: relative; overflow: hidden; }
 .booking-band::before {
