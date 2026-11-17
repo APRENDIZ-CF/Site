@@ -80,6 +80,21 @@
   document.addEventListener("click", function (e) { if (!e.target.closest(".has-sub")) closeSubs(); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeSubs(); });
 
+  /* ---- Consultoria: destaca a área visível na barra de áreas ---- */
+  var idxLinks = document.querySelectorAll(".svc-index a[href^='#']");
+  if (idxLinks.length && "IntersectionObserver" in window) {
+    var byId = {};
+    idxLinks.forEach(function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        idxLinks.forEach(function (a) { a.classList.remove("is-active"); a.removeAttribute("aria-current"); });
+        var l = byId[en.target.id]; if (l) { l.classList.add("is-active"); l.setAttribute("aria-current", "true"); }
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    Object.keys(byId).forEach(function (id) { var el = document.getElementById(id); if (el) obs.observe(el); });
+  }
+
   /* ---- Filtros de formações ---- */
   var filterBtns = document.querySelectorAll(".filter-btn");
   var courses = document.querySelectorAll(".course[data-cat]");
