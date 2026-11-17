@@ -1005,3 +1005,7 @@ h1, .page-hero h1 { font-weight: 600; }
 .plan-card .btn { width: 100%; justify-content: center; }
 .price-plans--big { font-size: 1rem; }
 .price-plans--big th, .price-plans--big td { padding: 12px 6px; }
+
+/* ---------- Menos espaço entre o cabeçalho da página e o primeiro bloco ---------- */
+.page-hero { padding-bottom: clamp(20px, 2.4vw, 32px); }
+.page-hero + section { padding-top: clamp(24px, 2.6vw, 36px); }
