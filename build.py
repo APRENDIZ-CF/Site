@@ -174,7 +174,7 @@ NAV_SUB = {
         ("Formações Privadas", "formacoes-privadas.html"),
     ],
     "aluguer": [
-        ("Aluguer de Sala", "aluguer-sala.html"),
+        ("Aluguer de Sala de Formação", "aluguer-sala.html"),
         ("Escritórios", "escritorios.html"),
     ],
 }

@@ -1098,3 +1098,5 @@ body { font-size: 1.125rem; }
 @media (min-width: 1180px) and (max-width: 1500px) { .header-social .socials a { width: 40px; height: 40px; } .header-social .socials svg { width: 18px; height: 18px; } }
 @media (min-width: 1180px) and (max-width: 1320px) { .header-social .socials a { width: 36px; height: 36px; } }
 .main-nav ul > li { display: flex; align-items: center; }
+.main-nav .subnav li { display: block; }
+.mobile-menu li a[aria-current="page"] { font-style: normal; text-decoration: underline; text-decoration-color: var(--orange); text-underline-offset: 6px; text-decoration-thickness: 1px; }
