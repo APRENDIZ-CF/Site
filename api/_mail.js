@@ -18,7 +18,7 @@ const table = (title, rows) =>
 
 /**
  * Envia um e-mail (content dos anexos em base64).
- * @param {{to:string, replyTo?:string, subject:string, text:string, html:string,
+ * @param {{to:string, cc?:string, replyTo?:string, subject:string, text:string, html:string,
  *          attachments?: {filename:string, content:string, contentType?:string}[]}} m
  */
 async function sendMail(m) {
@@ -29,7 +29,7 @@ async function sendMail(m) {
       headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         from: process.env.RESEND_FROM || "Site Aprendiz <onboarding@resend.dev>",
-        to: [m.to], reply_to: m.replyTo, subject: m.subject, text: m.text, html: m.html,
+        to: [m.to], cc: m.cc ? [m.cc] : undefined, reply_to: m.replyTo, subject: m.subject, text: m.text, html: m.html,
         attachments: attachments.map((a) => ({ filename: a.filename, content: a.content })),
       }),
     });
@@ -41,7 +41,7 @@ async function sendMail(m) {
     });
     await transporter.sendMail({
       from: `"Aprendiz – Consultoria & Formação" <${process.env.GMAIL_USER}>`,
-      to: m.to, replyTo: m.replyTo, subject: m.subject, text: m.text, html: m.html,
+      to: m.to, cc: m.cc, replyTo: m.replyTo, subject: m.subject, text: m.text, html: m.html,
       attachments: attachments.map((a) => ({ filename: a.filename, content: a.content, encoding: "base64", contentType: a.contentType })),
     });
   } else {

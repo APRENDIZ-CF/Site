@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=8f3df9abd4">
+<link rel="stylesheet" href="assets/css/style.css?v=7b629963c8">
 
 </head>
 <body>
@@ -81,7 +81,7 @@
   <div class="container">
     <div class="grid-12">
       <h1 class="reveal">Inscrição</h1>
-      <p class="lead reveal" data-delay="1">Para particulares: preencha os seus dados, faça a transferência bancária e envie-nos o comprovativo. Empresas: preço sob consulta, por e-mail ou WhatsApp.</p>
+      <p class="lead reveal" data-delay="1">Para particulares: faça a transferência bancária, preencha a ficha e carregue o comprovativo e o documento de identificação. Empresas: preço sob consulta, por e-mail ou WhatsApp.</p>
     </div>
   </div>
 </section>
@@ -90,10 +90,13 @@
   <div class="container">
     <div class="grid-12 contact-grid">
       <div class="contact-form">
-
-        <!-- Passo 1: dados do aluno -->
-        <div id="passo-dados">
-          <h2>1. Os seus dados</h2>
+        <div id="inscricao-ok" hidden>
+          <h2 tabindex="-1">Inscrição enviada.</h2>
+          <p>Obrigado! Recebemos os seus dados, o comprovativo de pagamento e o documento de identificação. Vamos validar o pagamento e confirmar a sua vaga por e-mail.</p>
+          <p class="muted">Recebeu uma cópia da inscrição no seu e-mail. Dúvidas? WhatsApp <a href="https://wa.me/244923353534" target="_blank" rel="noopener">+244 923 35 35 34</a>.</p>
+        </div>
+        <div id="inscricao-form">
+          <h2>Ficha de inscrição</h2>
           <form class="form" id="form-inscricao" data-endpoint="/api/inscricao" novalidate aria-label="Formulário de inscrição">
             <div class="hp-field" aria-hidden="true"><label>Não preencher <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
             <div class="field full"><label for="i-nome">Nome completo <span class="req">*</span></label><input id="i-nome" name="nome" autocomplete="name" required><span class="error-msg" aria-live="polite"></span></div>
@@ -122,9 +125,22 @@
               </select><span class="error-msg" aria-live="polite"></span>
               <p class="pay-price" id="i-preco" aria-live="polite" hidden></p></div>
             <div class="field full" id="i-tema-field" hidden><label for="i-tema">Tema das aulas privadas <span class="req">*</span></label><input id="i-tema" name="tema" placeholder="ex.: Excel, Power BI, Contabilidade…" maxlength="120" disabled><span class="error-msg" aria-live="polite"></span></div>
-            <div class="field full"><label for="i-doc">Nº do documento de identificação</label><input id="i-doc" name="documento" autocomplete="off" maxlength="40"><span class="error-msg" aria-live="polite"></span></div>
-            <div class="field"><label for="i-data">Data da formação</label><input id="i-data" name="data_formacao" type="date"><span class="error-msg" aria-live="polite"></span></div>
-            <div class="field"><label for="i-hora">Horário da formação</label><input id="i-hora" name="horario" placeholder="ex.: 18h00 – 21h00" maxlength="60"><span class="error-msg" aria-live="polite"></span></div>
+            <div class="field full"><label for="i-doc">Nº do documento de identificação <span class="req">*</span></label><input id="i-doc" name="documento" autocomplete="off" maxlength="40" required><span class="error-msg" aria-live="polite"></span></div>
+            <div class="field"><label for="i-data">Data da formação <span class="req">*</span></label><input id="i-data" name="data_formacao" type="date" required><span class="error-msg" aria-live="polite"></span></div>
+            <div class="field"><label for="i-hora">Horário da formação <span class="req">*</span></label><input id="i-hora" name="horario" placeholder="ex.: 18h00 – 21h00" maxlength="60" required><span class="error-msg" aria-live="polite"></span></div>
+            <div class="full pay-box">
+              <h3>Pagamento por transferência bancária</h3>
+              <p>Antes de enviar a inscrição, transfira o valor da formação para esta conta e guarde o comprovativo.</p>
+              <dl class="pay-card">
+                <div><dt>Valor</dt><dd data-pay="valor">Escolha a formação</dd></div>
+                <div class="pay-card__iban"><dt>IBAN</dt><dd><span data-pay="iban">…</span> <button type="button" class="pay-copy" data-copy="iban">Copiar</button></dd></div>
+                <div><dt>Titular</dt><dd data-pay="titular">…</dd></div>
+                <div data-pay-row="banco"><dt>Banco</dt><dd data-pay="banco">…</dd></div>
+                <div><dt>Descritivo</dt><dd>O seu nome completo</dd></div>
+              </dl>
+            </div>
+            <div class="field full"><label for="i-comp">Comprovativo de pagamento (PDF ou foto) <span class="req">*</span></label><input id="i-comp" name="comprovativo" type="file" accept="application/pdf,image/*" required><span class="error-msg" aria-live="polite"></span></div>
+            <div class="field full"><label for="i-docfile">Documento de identificação (PDF ou foto) <span class="req">*</span></label><input id="i-docfile" name="documento_ficheiro" type="file" accept="application/pdf,image/*" required><span class="error-msg" aria-live="polite"></span></div>
             <div class="field full terms"><label class="terms__check"><input type="checkbox" name="aceita_cancelamento" value="Sim" required> <span>Concordo com as condições de cancelamento:</span></label>
               <ol class="terms__list">
                 <li>Cancelamento até 3 dias úteis antes da formação, será ressarcido 100% do valor pago.</li>
@@ -140,52 +156,18 @@
                 <li>Durante a formação o formando deve respeito ao formador e colegas. Caso se verifique o contrário, o formando será expulso sem direito a reembolso do valor pago.</li>
                 <li>A segurança das viaturas dos formandos é responsabilidade dos mesmos.</li>
               </ol><span class="error-msg" aria-live="polite"></span></div>
-            <div class="field"><label for="i-hoje">Data de hoje</label><input id="i-hoje" name="data_hoje" type="date" readonly tabindex="-1"><span class="error-msg"></span></div>
-            <div class="full"><button class="btn btn--primary" type="submit">Continuar para o pagamento</button></div>
-            <p class="form-status" role="status" tabindex="-1" hidden></p>
-          </form>
-          <p class="muted pay-already">Já se inscreveu e tem um código? <a href="#passo-comprovativo" data-show-comprovativo>Enviar comprovativo</a></p>
-        </div>
-
-        <!-- Passo 2: dados para pagamento (preenchido depois do passo 1) -->
-        <div id="passo-pagamento" hidden>
-          <h2 tabindex="-1">2. Faça a transferência</h2>
-          <p class="muted">Enviámos estes dados também para o seu e-mail. A vaga fica reservada depois de validarmos o pagamento.</p>
-          <dl class="pay-card">
-            <div><dt>Formação</dt><dd data-pay="formacao"></dd></div>
-            <div><dt>Valor</dt><dd data-pay="valor"></dd></div>
-            <div class="pay-card__iban"><dt>IBAN</dt><dd><span data-pay="iban"></span> <button type="button" class="pay-copy" data-copy="iban">Copiar</button></dd></div>
-            <div><dt>Titular</dt><dd data-pay="titular"></dd></div>
-            <div data-pay-row="banco"><dt>Banco</dt><dd data-pay="banco"></dd></div>
-            <div class="pay-card__code"><dt>Descritivo / referência</dt><dd><span data-pay="codigo"></span> <button type="button" class="pay-copy" data-copy="codigo">Copiar</button></dd></div>
-          </dl>
-          <p class="pay-note"><strong>Importante:</strong> escreva o código <strong data-pay="codigo"></strong> no descritivo da transferência, para identificarmos o seu pagamento.</p>
-        </div>
-
-        <!-- Passo 3: comprovativo -->
-        <div id="passo-comprovativo" hidden>
-          <h2 tabindex="-1">3. Envie o comprovativo</h2>
-          <form class="form" id="form-comprovativo" data-endpoint="/api/comprovativo" novalidate aria-label="Envio do comprovativo de pagamento">
-            <div class="hp-field" aria-hidden="true"><label>Não preencher <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
-            <div class="field"><label for="p-codigo">Código de inscrição <span class="req">*</span></label><input id="p-codigo" name="codigo" required pattern="[Aa][Pp]-[0-9]{6}-[A-Za-z0-9]{4}" placeholder="AP-000000-XXXX" autocapitalize="characters"><span class="error-msg" aria-live="polite"></span></div>
-            <div class="field"><label for="p-nome">Nome <span class="req">*</span></label><input id="p-nome" name="nome" autocomplete="name" required><span class="error-msg" aria-live="polite"></span></div>
-            <div class="field full"><label for="p-email">E-mail <span class="req">*</span></label><input id="p-email" name="email" type="email" autocomplete="email" required><span class="error-msg" aria-live="polite"></span></div>
-            <div class="field full"><label for="p-file">Comprovativo (PDF ou imagem, até 3 MB) <span class="req">*</span></label><input id="p-file" name="ficheiro" type="file" accept="application/pdf,image/jpeg,image/png,image/webp,image/heic" required><span class="error-msg" aria-live="polite"></span></div>
-            <div class="full pay-actions">
-              <button class="btn btn--primary" type="submit">Enviar comprovativo</button>
-              <a class="btn btn--outline" id="pay-whatsapp" href="https://wa.me/244923353534" target="_blank" rel="noopener">Enviar pelo WhatsApp</a>
-            </div>
+            <div class="field"><label for="i-hoje">Data de hoje <span class="req">*</span></label><input id="i-hoje" name="data_hoje" type="date" readonly required tabindex="-1"><span class="error-msg"></span></div>
+            <div class="full"><button class="btn btn--primary" type="submit">Enviar inscrição</button></div>
             <p class="form-status" role="status" tabindex="-1" hidden></p>
           </form>
         </div>
-
       </div>
       <aside class="contact-aside">
         <h3 class="hours__title">Como funciona</h3>
         <ol class="pay-steps">
-          <li><strong>Inscreva-se.</strong> Preencha os seus dados e receba um código de inscrição.</li>
-          <li><strong>Transfira.</strong> Faça a transferência para o IBAN indicado, com o código no descritivo.</li>
-          <li><strong>Envie o comprovativo.</strong> Carregue o PDF ou a foto do comprovativo aqui, ou envie pelo WhatsApp.</li>
+          <li><strong>Escolha a formação.</strong> O valor aparece no formulário.</li>
+          <li><strong>Transfira.</strong> Faça a transferência para o IBAN indicado, com o seu nome no descritivo.</li>
+          <li><strong>Envie a inscrição.</strong> Preencha os dados e carregue o comprovativo e o documento de identificação.</li>
           <li><strong>Vaga confirmada.</strong> Validamos o pagamento e confirmamos a sua vaga por e-mail.</li>
         </ol>
         <p class="muted"><strong>Empresas:</strong> preço sob consulta. Fale connosco por <a href="mailto:jdsaprendiz@gmail.com">e-mail</a> ou <a href="https://wa.me/244923353534" target="_blank" rel="noopener">WhatsApp</a>.</p>
@@ -194,7 +176,7 @@
     </div>
   </div>
 </section>
-<script src="assets/js/inscricao.js?v=2513f56d01" defer></script>
+<script src="assets/js/inscricao.js?v=27fdcb7868" defer></script>
 </main>
 <footer class="site-footer">
   <div class="container">
