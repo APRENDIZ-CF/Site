@@ -1,6 +1,12 @@
 {
+  "buildCommand": "python3 build.py",
+  "outputDirectory": ".",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/src/:path*", "destination": "/", "permanent": false },
+    { "source": "/build.py", "destination": "/", "permanent": false }
+  ],
   "headers": [
     { "source": "/assets/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
     { "source": "/(.*)", "headers": [

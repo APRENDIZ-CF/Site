@@ -21,7 +21,9 @@ Atalhos disponíveis no conteúdo:
   {{phone}} {{email}} {{whatsapp}} ...   dados de contacto (ver SITE)
 """
 import json
+import os
 import re
+import sys
 from datetime import date
 from pathlib import Path
 
@@ -36,7 +38,8 @@ SITE = {
     "phone": "+244 923 35 35 34",
     "phone_link": "+244923353534",
     "whatsapp": "244923353534",                   # só dígitos, com indicativo
-    "email": "jdsaprendiz@gmail.com",
+    # E-mail de contacto: lido da variável de ambiente SITE_EMAIL (ou GMAIL_USER), definida na Vercel.
+    "email": os.environ.get("SITE_EMAIL") or os.environ.get("GMAIL_USER") or "",
     "facebook": "https://www.facebook.com/share/1EQHuuKDxi/?mibextid=wwXIfr",
     "youtube": "https://www.youtube.com/@Aprendiz_2021",
     "address": "Rua Cónego Manuel das Neves, Prédio 5, Porta 9 – Kinaxixi, Luanda",
@@ -290,4 +293,6 @@ def build():
 
 
 if __name__ == "__main__":
+    if not SITE["email"]:
+        sys.exit("Erro: defina a variável de ambiente SITE_EMAIL (ou GMAIL_USER) com o e-mail de contacto do site.")
     build()
