@@ -77,18 +77,31 @@ async function busyFromIcs(text, now = new Date()) {
   return out.sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start));
 }
 
+/** Horários ocupados no calendário "Sala de Formação" via Apps Script (reservas confirmadas). */
+async function busyFromScript(url) {
+  const r = await fetch(url + (url.includes("?") ? "&" : "?") + "acao=ocupacao", { redirect: "follow" });
+  if (!r.ok) throw new Error("Apps Script " + r.status);
+  const j = await r.json();
+  return Array.isArray(j.busy) ? j.busy.filter((b) => b && /^\d{4}-\d{2}-\d{2}$/.test(b.date) && /^\d{2}:\d{2}$/.test(b.start) && /^\d{2}:\d{2}$/.test(b.end)) : [];
+}
+
 module.exports = async (req, res) => {
-  res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate=300");
-  const url = process.env.GCAL_ICS_URL;
-  if (!url) return res.status(200).json({ configured: false, busy: [] });
-  try {
-    const r = await fetch(url, { headers: { "User-Agent": "aprendiz-site" } });
-    if (!r.ok) throw new Error("ICS " + r.status);
-    const busy = await busyFromIcs(await r.text());
-    return res.status(200).json({ configured: true, busy });
-  } catch (err) {
-    console.error("Erro ao ler o calendário:", err);
-    return res.status(200).json({ configured: true, error: true, busy: [] });
+  res.setHeader("Cache-Control", "s-maxage=30, stale-while-revalidate=120");
+  const ics = process.env.GCAL_ICS_URL, script = process.env.DRIVE_UPLOAD_URL;
+  if (!ics && !script) return res.status(200).json({ configured: false, busy: [] });
+  const busy = [];
+  let error = false;
+  if (script) {
+    try { busy.push(...await busyFromScript(script)); } catch (err) { console.error("Erro ao ler o calendário (Apps Script):", err); error = true; }
   }
+  if (ics) {
+    try {
+      const r = await fetch(ics, { headers: { "User-Agent": "aprendiz-site" } });
+      if (!r.ok) throw new Error("ICS " + r.status);
+      busy.push(...await busyFromIcs(await r.text()));
+    } catch (err) { console.error("Erro ao ler o calendário (iCal):", err); error = true; }
+  }
+  busy.sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start));
+  return res.status(200).json(error ? { configured: true, error: true, busy } : { configured: true, busy });
 };
 module.exports.busyFromIcs = busyFromIcs;

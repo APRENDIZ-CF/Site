@@ -289,6 +289,8 @@
 
       var data = {};
       fd.forEach(function (v, k) { if (typeof v === "string") data[k] = v; });
+      var hm = function (m) { return pad(Math.floor(m / 60)) + ":" + pad(m % 60); };
+      data.data_iso = sel.date; data.inicio = hm(sel.from); data.fim = hm(sel.to);
       data.data = longDate(sel.date); data.horario = horario + " (" + String(sel.hours).replace(".", ",") + " h)"; data.valor = kz(sel.price);
       var status = form.querySelector(".form-status");
       var btn = form.querySelector('[type="submit"]');
