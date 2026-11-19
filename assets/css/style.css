@@ -1121,3 +1121,7 @@ body { font-size: 1.125rem; }
 @media (min-width: 640px) { .ticks.benefits { grid-template-columns: 1fr 1fr; } }
 .ticks.benefits li { font-size: 1.08rem; color: var(--text); }
 @media (min-width: 640px) { .ticks.benefits li:nth-child(2) { border-top: 1px solid var(--line); } }
+@media (min-width: 900px) {
+  .ticks.benefits { grid-template-columns: repeat(3, 1fr); max-width: 1040px; }
+  .ticks.benefits li:nth-child(3) { border-top: 1px solid var(--line); }
+}
