@@ -1105,3 +1105,12 @@ body { font-size: 1.125rem; }
 .terms-intro { margin: 8px 0 -8px; font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--green); font-weight: 500; }
 .field.terms--q { padding: 14px 18px; }
 .field.terms--q .terms__check { font-weight: 400; color: var(--text); line-height: 1.55; }
+
+/* ---------- Reserva da sala: selecionado a cinzento, esgotado/ocupado a vermelho ---------- */
+.sec-num--light { display: block; color: rgba(255,255,255,.9); margin-bottom: 8px; }
+.cal__day.is-selected, .cal__day.is-selected:hover { background: #6B6B6B; border-color: #6B6B6B; color: #fff; box-shadow: 0 6px 16px rgba(0,0,0,.25); }
+.cal__day.is-full, .cal__day.is-full:hover { background: #C62828; border-color: #C62828; color: #fff; text-decoration: line-through; font-weight: 500; }
+.slot:disabled:not(.is-past) { background: #C62828; border-color: #C62828; color: #fff; text-decoration: line-through; }
+.slot.is-sel, .slot.is-sel:hover, .slot.is-start, .slot.is-end, .slot.is-in { background: #6B6B6B; border-color: #6B6B6B; color: #fff; }
+.lg--sel { background: #6B6B6B; border-color: #6B6B6B; }
+.lg--full { background: #C62828; border-color: #C62828; }

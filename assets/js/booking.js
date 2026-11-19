@@ -44,7 +44,7 @@
   function ymd(y, m, d) { return y + "-" + pad(m + 1) + "-" + pad(d); }
   function dow(date) { var p = date.split("-"); return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2])).getUTCDay(); }
   function rateFor(date) { var d = dow(date); return d === 0 ? RATES.sunday : d === 6 ? RATES.saturday : RATES.weekday; }
-  function kz(v) { return v.toLocaleString("pt-PT").replace(/\s/g, ".") + " Kz"; }
+  function kz(v) { return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " Kz"; }
   function longDate(date) { var p = date.split("-"); return DOW_LONG[dow(date)] + ", " + (+p[2]) + " de " + MONTHS[+p[1] - 1] + " de " + p[0]; }
 
   function slotState(date, i) {
@@ -60,7 +60,8 @@
       var s = slotState(date, i);
       if (s === "free") free++; else if (s === "busy") taken++;
     }
-    if (free < 2) return "full";            // menos de 1 hora livre
+    if (!free && !taken) return "disabled"; // hoje, depois da hora de fecho (nada ocupado, só já passou)
+    if (!free) return "full";               // todos os horários restantes estão ocupados
     return taken ? "partial" : "free";
   }
 
@@ -132,6 +133,7 @@
         if (i === state.start) b.classList.add("is-start");
         if (state.end !== null && i === state.end) b.classList.add("is-end");
         if (i > state.start && i < end) b.classList.add("is-in");
+        if (i >= state.start && i <= end) { b.classList.add("is-sel"); b.setAttribute("aria-pressed", "true"); }
       }
       b.setAttribute("aria-label", label);
       slotsGrid.appendChild(b);
@@ -139,18 +141,20 @@
     updateSummary();
   }
 
+  /* Seleção bloco a bloco: clica-se em cada meia hora, seguida, até à hora final.
+     Clicar no primeiro ou no último bloco selecionado retira-o; clicar num bloco
+     que não é seguido aos selecionados começa uma nova seleção. */
   slotsGrid.addEventListener("click", function (e) {
     var b = e.target.closest(".slot");
     if (!b || b.disabled) return;
     var i = +b.dataset.i;
-    if (state.start === null || state.end !== null) { state.start = i; state.end = null; }
-    else if (i === state.start) { state.start = null; }
-    else if (i < state.start) { state.start = i; }
-    else {
-      var clear = true;
-      for (var k = state.start; k <= i; k++) if (slotState(state.date, k) !== "free") { clear = false; break; }
-      if (clear) state.end = i; else { state.start = i; }
-    }
+    if (state.start === null) { state.start = state.end = i; }
+    else if (i === state.end + 1) { state.end = i; }
+    else if (i === state.start - 1) { state.start = i; }
+    else if (i === state.start && i === state.end) { state.start = state.end = null; }
+    else if (i === state.end) { state.end--; }
+    else if (i === state.start) { state.start++; }
+    else { state.start = state.end = i; }
     renderSlots();
   });
 
@@ -158,7 +162,8 @@
     if (!state.date || state.start === null || state.end === null) return null;
     var from = SLOTS[state.start], to = SLOTS[state.end] + STEP;
     var hours = (to - from) / 60;
-    return { date: state.date, from: from, to: to, hours: hours, price: Math.round(hours * rateFor(state.date)) };
+    var billed = Math.ceil(hours); // cada hora iniciada conta como hora completa
+    return { date: state.date, from: from, to: to, hours: hours, billed: billed, price: billed * rateFor(state.date) };
   }
 
   function updateSummary() {
@@ -166,14 +171,15 @@
     var hint = root.querySelector(".slots__hint");
     if (!sel) {
       summary.hidden = true;
-      if (hint) hint.textContent = state.start !== null ? "Agora clique na hora de fim (mínimo 1 hora)." : "Clique na hora de início e depois na hora de fim (mínimo 1 hora).";
+      if (hint) hint.textContent = "Clique nos horários, um a um, desde a hora de início até à hora em que pretende terminar. Cada bloco corresponde a 30 minutos.";
       return;
     }
-    if (hint) hint.textContent = "Horário selecionado. Para alterar, clique noutra hora de início.";
+    if (hint) hint.textContent = "Continue a clicar nos horários seguintes para prolongar. Para retirar, clique no último horário selecionado.";
     summary.hidden = false;
     summary.querySelector('[data-sum="date"]').textContent = longDate(sel.date);
     summary.querySelector('[data-sum="time"]').textContent = hhmm(sel.from) + " – " + hhmm(sel.to);
-    summary.querySelector('[data-sum="hours"]').textContent = (sel.hours % 1 ? sel.hours.toString().replace(".", ",") : sel.hours) + (sel.hours === 1 ? " hora" : " horas");
+    summary.querySelector('[data-sum="hours"]').textContent = (sel.hours % 1 ? sel.hours.toString().replace(".", ",") : sel.hours) + (sel.hours === 1 ? " hora" : " horas") +
+      (sel.billed !== sel.hours ? " (cobradas " + sel.billed + " h)" : "");
     summary.querySelector('[data-sum="price"]').textContent = kz(sel.price);
     var err = form && form.querySelector(".booking__error"); if (err) err.hidden = true;
   }

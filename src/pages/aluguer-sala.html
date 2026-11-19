@@ -16,41 +16,17 @@ hero: false
   </div>
 </section>
 
-<section class="section room">
-  <div class="container">
-    <div class="grid-12 room__grid">
-      <figure class="figure room__photo reveal">
-        <picture>
-          <source srcset="assets/img/SF_6-720.webp 720w, assets/img/SF_6.webp 1200w" sizes="(min-width: 900px) 45vw, 100vw" type="image/webp">
-          <img src="assets/img/SF_6.jpg" alt="Sala de formação com mesas individuais, cadeiras pretas estofadas e ecrã de apresentação" width="1200" height="1600" fetchpriority="high">
-        </picture>
-      </figure>
-      <div class="room__text reveal" data-delay="1">
-        <span class="sec-num">01</span>
-        <span class="eyebrow">O espaço</span>
-        <h2>Equipada para aprender, apresentar e decidir.</h2>
-        <p class="lead muted">A nossa sala está preparada para formações, workshops e reuniões, com todo o equipamento necessário para que se concentre apenas no conteúdo.</p>
-        <ul class="amenities amenities--compact">
-          <li>[[icon:screen]]<strong>Ecrã / TV</strong><span>Apresentações e vídeo.</span></li>
-          <li>[[icon:desk]]<strong>Mesas individuais</strong><span>Disposição flexível.</span></li>
-          <li>[[icon:chair]]<strong>Cadeiras estofadas</strong><span>Conforto em sessões longas.</span></li>
-          <li>[[icon:light]]<strong>Iluminação</strong><span>Luz uniforme.</span></li>
-          <li>[[icon:wifi]]<strong>Wi-Fi</strong><span>Internet para todos.</span></li>
-          <li>[[icon:climate]]<strong>Climatização</strong><span>Ambiente agradável.</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
+
 
 
 <section class="section booking-band" id="reserva">
   <div class="container">
     <div class="booking-band__head reveal">
       <div>
+        <span class="sec-num sec-num--light">01</span>
         <span class="booking-band__tag">Calendário de reservas</span>
         <h2>Consulte a disponibilidade e reserve a sala.</h2>
-        <p class="lead">Escolha um dia no calendário e, depois, a hora de início e a hora de fim. Aberto todos os dias, das 08h00 às 20h00.</p>
+        <p class="lead">Escolha um dia no calendário e, depois, clique nos horários um a um até à hora em que pretende terminar. Cada hora iniciada é cobrada como hora completa. Aberto todos os dias, das 08h00 às 20h00.</p>
       </div>
       <ul class="booking-band__prices" aria-label="Preços por hora">
         <li><span>Dias úteis</span><strong>5.000 Kz</strong><small>por hora</small></li>
@@ -71,14 +47,14 @@ hero: false
         <ul class="cal__legend">
           <li><span class="lg lg--free"></span>Disponível</li>
           <li><span class="lg lg--partial"></span>Parcialmente ocupado</li>
-          <li><span class="lg lg--full"></span>Esgotado</li>
+          <li><span class="lg lg--full"></span>Esgotado / ocupado</li>
           <li><span class="lg lg--sel"></span>Selecionado</li>
         </ul>
       </div>
       <div class="booking__slots">
         <p class="booking__step"><span>2</span> Escolha o horário</p>
         <h3 class="slots__title">Horários <span class="slots__date">— escolha primeiro um dia</span></h3>
-        <p class="slots__hint muted">Clique na hora de início e depois na hora de fim (mínimo 1 hora).</p>
+        <p class="slots__hint muted">Clique nos horários, um a um, desde a hora de início até à hora em que pretende terminar. Cada bloco corresponde a 30 minutos.</p>
         <div class="slots__grid" aria-live="polite"></div>
         <div class="booking__summary" hidden>
           <dl>
@@ -135,6 +111,33 @@ hero: false
       </div>
       <p class="form-status" role="status" tabindex="-1" hidden></p>
     </form>
+  </div>
+</section>
+
+<section class="section room">
+  <div class="container">
+    <div class="grid-12 room__grid">
+      <figure class="figure room__photo reveal">
+        <picture>
+          <source srcset="assets/img/SF_6-720.webp 720w, assets/img/SF_6.webp 1200w" sizes="(min-width: 900px) 45vw, 100vw" type="image/webp">
+          <img src="assets/img/SF_6.jpg" alt="Sala de formação com mesas individuais, cadeiras pretas estofadas e ecrã de apresentação" width="1200" height="1600" loading="lazy" decoding="async">
+        </picture>
+      </figure>
+      <div class="room__text reveal" data-delay="1">
+        <span class="sec-num">03</span>
+        <span class="eyebrow">O espaço</span>
+        <h2>Equipada para aprender, apresentar e decidir.</h2>
+        <p class="lead muted">A nossa sala está preparada para formações, workshops e reuniões, com todo o equipamento necessário para que se concentre apenas no conteúdo.</p>
+        <ul class="amenities amenities--compact">
+          <li>[[icon:screen]]<strong>Ecrã / TV</strong><span>Apresentações e vídeo.</span></li>
+          <li>[[icon:desk]]<strong>Mesas individuais</strong><span>Disposição flexível.</span></li>
+          <li>[[icon:chair]]<strong>Cadeiras estofadas</strong><span>Conforto em sessões longas.</span></li>
+          <li>[[icon:light]]<strong>Iluminação</strong><span>Luz uniforme.</span></li>
+          <li>[[icon:wifi]]<strong>Wi-Fi</strong><span>Internet para todos.</span></li>
+          <li>[[icon:climate]]<strong>Climatização</strong><span>Ambiente agradável.</span></li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
