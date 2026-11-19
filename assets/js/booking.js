@@ -303,10 +303,10 @@
       var btnText = btn.textContent;
       btn.disabled = true; btn.textContent = "A enviar…"; status.hidden = true;
 
-      prepararFicheiro(form.querySelector("#r-docfile").files[0])
+      Promise.all([prepararFicheiro(form.querySelector("#r-comp").files[0]), prepararFicheiro(form.querySelector("#r-docfile").files[0])])
         .then(function (f) {
-          if (f.data.length > 4000000) { var e2 = new Error("O ficheiro é demasiado grande (máximo 3 MB). Envie uma foto em vez de PDF, ou um PDF mais pequeno."); e2.local = true; throw e2; }
-          data.documento_ficheiro = f;
+          if (f[0].data.length + f[1].data.length > 4000000) { var e2 = new Error("Os ficheiros são demasiado grandes (máximo 3 MB no total). Envie fotos em vez de PDF, ou PDFs mais pequenos."); e2.local = true; throw e2; }
+          data.comprovativo = f[0]; data.documento_ficheiro = f[1];
           return fetch("/api/reserva", { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) });
         })
         .then(function (r) {

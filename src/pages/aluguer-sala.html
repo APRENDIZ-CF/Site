@@ -100,19 +100,19 @@ hero: false
       <div class="field full"><label for="r-docfile">Documento de identificação (PDF ou foto) <span class="req">*</span></label><input id="r-docfile" name="documento_ficheiro" type="file" accept="application/pdf,image/*" required><span class="error-msg" aria-live="polite"></span></div>
       <div class="full pay-box">
         <h3>Dados para pagamento</h3>
-        <p>O pagamento da reserva é feito por transferência bancária para esta conta.</p>
+        <p>Antes de enviar o pedido, transfira o valor estimado da reserva para esta conta e carregue o comprovativo abaixo.</p>
         <dl class="pay-card">
           <div><dt>Banco</dt><dd data-pay="banco">BAI</dd></div>
           <div class="pay-card__iban"><dt>IBAN</dt><dd><span data-pay="iban">AO06 0040 0000 5681 0086 1011 4</span> <button type="button" class="pay-copy" data-copy="iban">Copiar</button></dd></div>
           <div><dt>Titular</dt><dd data-pay="titular">Aprendiz - Consultoria e Formação</dd></div>
         </dl>
       </div>
+      <div class="field full"><label for="r-comp">Comprovativo de pagamento (PDF ou foto) <span class="req">*</span></label><input id="r-comp" name="comprovativo" type="file" accept="application/pdf,image/*" required><span class="error-msg" aria-live="polite"></span></div>
       <p class="full terms-intro">Condições da reserva <span class="req">*</span></p>
       <div class="field full terms terms--q"><label class="terms__check"><input type="checkbox" name="aceita_1" value="Sim" required> <span>Concorda que terá acesso à sala apenas nas datas e horas marcadas no ponto anterior?</span></label><span class="error-msg" aria-live="polite"></span></div>
       <div class="field full terms terms--q"><label class="terms__check"><input type="checkbox" name="aceita_2" value="Sim" required> <span>Concorda que a troca das datas e horas marcadas no ponto anterior só é possível por notificação com 24 horas de antecedência e caso haja vaga nas datas e horas pretendidas?</span></label><span class="error-msg" aria-live="polite"></span></div>
       <div class="field full terms terms--q"><label class="terms__check"><input type="checkbox" name="aceita_3" value="Sim" required> <span>Concorda que, ao cancelar a marcação, só haverá ressarcimento do pagamento caso faça a notificação com 24 horas de antecedência? Caso contrário, não haverá ressarcimento.</span></label><span class="error-msg" aria-live="polite"></span></div>
-      <div class="field full terms terms--q"><label class="terms__check"><input type="checkbox" name="aceita_4" value="Sim" required> <span>Concorda que a devolução do pagamento dentro do prazo de cancelamento será de 100% caso a sua conta seja do banco BAI e que, caso seja de outro banco, terá um desconto de 2.500 Kz?</span></label><span class="error-msg" aria-live="polite"></span></div>
-      <div class="field full terms terms--q"><label class="terms__check"><input type="checkbox" name="aceita_5" value="Sim" required> <span>Concorda que, se danificar algum bem, deverá repará-lo ou fazer a troca do mesmo caso não seja possível a reparação?</span></label><span class="error-msg" aria-live="polite"></span></div>
+      <div class="field full terms terms--q"><label class="terms__check"><input type="checkbox" name="aceita_4" value="Sim" required> <span>Concorda que, se danificar algum bem, deverá repará-lo ou fazer a troca do mesmo caso não seja possível a reparação?</span></label><span class="error-msg" aria-live="polite"></span></div>
       <p class="booking__error full" role="alert" hidden>Escolha primeiro o dia e o horário no calendário acima.</p>
       <div class="full booking__actions">
         <button class="btn btn--primary" type="submit">Enviar pedido de reserva</button>

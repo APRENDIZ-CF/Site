@@ -1,7 +1,7 @@
 /**
  * Pedido de reserva da sala de formação (página aluguer-sala.html).
  *
- * Envia um e-mail para a Aprendiz (CONTACT_TO) com o documento de identificação em anexo e os
+ * Envia um e-mail para a Aprendiz (CONTACT_TO) com o comprovativo de pagamento e o documento de identificação em anexo e os
  * botões "Confirmar reserva" / "Anular reserva" (tratados pelo Apps Script, que marca o horário
  * no Google Calendar "Sala de Formação"), e uma cópia do pedido ao cliente (sem os botões).
  * Guarda também o documento na Google Drive (se configurada).
@@ -17,7 +17,6 @@ const CLAUSULAS = [
   "Acesso à sala apenas nas datas e horas marcadas",
   "Troca de datas/horas só com notificação de 24 horas de antecedência e se houver vaga",
   "Ressarcimento por cancelamento só com notificação de 24 horas de antecedência",
-  "Devolução de 100% se a conta for do BAI; outros bancos com desconto de 2.500 Kz",
   "Reparação ou troca de bens danificados",
 ];
 
@@ -61,6 +60,8 @@ module.exports = async (req, res) => {
   for (let i = 1; i <= CLAUSULAS.length; i++) {
     if (s("aceita_" + i, 5) !== "Sim") return erro(res, 400, "É necessário concordar com todas as condições.");
   }
+  const extComp = ficheiroValido(body.comprovativo);
+  if (!extComp) return erro(res, 400, "Carregue o comprovativo de pagamento (PDF ou foto, até 3 MB).");
   const ext = ficheiroValido(body.documento_ficheiro);
   if (!ext) return erro(res, 400, "Carregue o documento de identificação (PDF ou foto, até 3 MB).");
   if (!mailConfigured()) {
@@ -73,11 +74,14 @@ module.exports = async (req, res) => {
     ["Nome", nome], ["Empresa", empresa], ["E-mail", email], ["Telefone", telefone], ["Mensagem", mensagem],
     ...CLAUSULAS.map((c) => [c, "Concorda"]),
     ["Pagamento", `Transferência para ${SALA.IBAN} (${SALA.BANCO} – ${SALA.TITULAR})`],
-    ["Anexo", "Documento de identificação"],
+    ["Anexos", "Comprovativo de pagamento e documento de identificação"],
     ["Data do pedido", hoje.split("-").reverse().join("/")],
-    ["Estado", "A confirmar disponibilidade pela Aprendiz"],
+    ["Estado", "A confirmar disponibilidade e pagamento pela Aprendiz"],
   ].filter(([, v]) => v);
   const attachments = [{
+    filename: `comprovativo-${slug(nome)}.${extComp}`,
+    content: body.comprovativo.data, contentType: body.comprovativo.type,
+  }, {
     filename: `documento-identificacao-${slug(nome)}.${ext}`,
     content: body.documento_ficheiro.data, contentType: body.documento_ficheiro.type,
   }];
@@ -112,7 +116,7 @@ module.exports = async (req, res) => {
     await sendMail({
       to: email, replyTo: ADMIN_TO(), subject: "Recebemos o seu pedido de reserva – " + data + ", " + horario,
       text: corpoTexto + "\n\n" + nota + "\n\nAprendiz – Consultoria & Formação · +244 923 35 35 34",
-      html: table("Pedido de reserva da sala de formação", rows.filter(([k]) => k !== "Anexo")) +
+      html: table("Pedido de reserva da sala de formação", rows.filter(([k]) => k !== "Anexos")) +
         `<p style="font-family:Arial,sans-serif;font-size:14px;color:#6B6B6B">${nota}</p>` + rodape,
     });
   } catch (err) {
