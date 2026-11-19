@@ -29,3 +29,14 @@ A página Aluguer de Sala mostra os horários ocupados lidos de um calendário G
 1. No Google Calendar, crie um calendário chamado "Sala de Formação" e registe lá cada reserva confirmada (título: "Reservado").
 2. Em Definições do calendário → "Endereço secreto no formato iCal", copie o endereço.
 3. Na Vercel → Settings → Environment Variables, crie `GCAL_ICS_URL` com esse endereço e faça Redeploy.
+
+## Ficheiros na Google Drive
+Os comprovativos e documentos de identificação enviados nos formulários (inscrição em formações e reserva da sala)
+seguem por e-mail e, se configurado, são também guardados na Google Drive (pasta "Site Aprendiz").
+1. Com a conta Google onde quer os ficheiros, siga as instruções no topo de `apps-script/GuardarNaDrive.gs`.
+2. Na Vercel crie `DRIVE_UPLOAD_URL` (URL da aplicação Web, termina em `/exec`) e `DRIVE_UPLOAD_TOKEN` (a palavra-chave do script).
+3. Faça Redeploy. Sem estas variáveis, os ficheiros continuam a chegar só por e-mail.
+
+## Gerar as páginas
+A Vercel corre `python3 build.py` em cada publicação. O e-mail de contacto mostrado no site vem da variável
+`SITE_EMAIL` (ou, se não existir, de `GMAIL_USER`).

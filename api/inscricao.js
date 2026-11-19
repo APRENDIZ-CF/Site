@@ -14,10 +14,9 @@
 const crypto = require("crypto");
 const { table, sendMail, mailConfigured, readBody, ADMIN_TO, EMAIL_RE } = require("./_mail");
 const { IBAN, TITULAR, BANCO, PRECOS, formatKz } = require("./_pagamento");
+const { ficheiroValido, slug: slugify, guardarNaDrive } = require("./_ficheiros");
 
 const ALFABETO = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // sem 0/O, 1/I para não confundir
-const TIPOS = { "application/pdf": "pdf", "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/heic": "heic", "image/heif": "heif" };
-const MAX_BYTES = 3 * 1024 * 1024; // por ficheiro (o pedido inteiro tem de caber em 4,5 MB)
 
 function novoCodigo() {
   const d = new Date(Date.now() + 60 * 60 * 1000); // hora de Luanda (UTC+1)
@@ -25,13 +24,6 @@ function novoCodigo() {
   let sufixo = "";
   for (let i = 0; i < 4; i++) sufixo += ALFABETO[crypto.randomInt(ALFABETO.length)];
   return `AP-${data}-${sufixo}`;
-}
-
-/** Valida um ficheiro { name, type, data(base64) }; devolve a extensão ou null. */
-function ficheiroValido(f) {
-  if (!f || typeof f.data !== "string" || !TIPOS[f.type]) return null;
-  const bytes = Buffer.byteLength(f.data, "base64");
-  return bytes > 0 && bytes <= MAX_BYTES ? TIPOS[f.type] : null;
 }
 
 const erro = (res, status, msg) => res.status(status).json({ ok: false, error: msg });
@@ -80,7 +72,7 @@ module.exports = async (req, res) => {
 
   const codigo = novoCodigo();
   const valor = formatKz(PRECOS[formacao]) || "a confirmar";
-  const slug = nome.normalize("NFD").replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-").slice(0, 40) || "formando";
+  const slug = slugify(nome);
 
   const rows = [
     ["Referência", codigo], ["Formação", formacao], ["Tema (aulas privadas)", plano ? tema : ""], ["Modalidade", modalidade],
@@ -93,6 +85,10 @@ module.exports = async (req, res) => {
   ].filter(([, v]) => v);
   const nota = "A Aprendiz vai validar o pagamento e confirmar a vaga por e-mail. Este e-mail foi enviado para a Aprendiz com cópia para o formando.";
 
+  const attachments = [
+    { filename: `comprovativo-${slug}.${extComp}`, content: body.comprovativo.data, contentType: body.comprovativo.type },
+    { filename: `documento-identificacao-${slug}.${extDoc}`, content: body.documento_ficheiro.data, contentType: body.documento_ficheiro.type },
+  ];
   try {
     await sendMail({
       to: ADMIN_TO(), cc: email, replyTo: email,
@@ -101,14 +97,14 @@ module.exports = async (req, res) => {
       html: table("Inscrição em formação", rows) +
         `<p style="font-family:Arial,sans-serif;font-size:14px;color:#6B6B6B">${nota}</p>` +
         `<p style="font-family:Arial,sans-serif;font-size:14px">Aprendiz – Consultoria &amp; Formação · +244 923 35 35 34</p>`,
-      attachments: [
-        { filename: `comprovativo-${slug}.${extComp}`, content: body.comprovativo.data, contentType: body.comprovativo.type },
-        { filename: `documento-identificacao-${slug}.${extDoc}`, content: body.documento_ficheiro.data, contentType: body.documento_ficheiro.type },
-      ],
+      attachments,
     });
   } catch (err) {
     console.error("Erro ao enviar e-mail de inscrição:", err);
     return erro(res, 502, "Falha no envio.");
   }
+  // Cópia dos ficheiros na Google Drive (se estiver configurada)
+  await guardarNaDrive("Inscrições", `${hoje} ${nome} – ${formacao} (${codigo})`, attachments,
+    rows.map(([k, v]) => `${k}: ${v}`).join("\n"));
   return res.status(200).json({ ok: true, codigo });
 };

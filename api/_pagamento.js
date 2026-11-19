@@ -50,4 +50,11 @@ const PRECOS = {
 
 const formatKz = (n) => (typeof n === "string" ? n : typeof n === "number" ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " Kz" : null);
 
-module.exports = { IBAN, TITULAR, BANCO, PRECOS, formatKz };
+/** Conta para pagamento do ALUGUER DA SALA DE FORMAÇÃO (diferente da conta das formações). */
+const SALA = {
+  IBAN: "AO06 0040 0000 5681 0086 1011 4", // NIB 0040 0000 56810086101 14
+  TITULAR: "Aprendiz - Consultoria e Formação",
+  BANCO: "BAI",
+};
+
+module.exports = { IBAN, TITULAR, BANCO, PRECOS, formatKz, SALA };

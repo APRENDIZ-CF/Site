@@ -193,9 +193,65 @@
       .catch(function () { busy = {}; });
   }
 
+  /* ---- Documento de identificação: fotos são reduzidas (JPEG) para caberem no envio ---- */
+  function lerBase64(blob) {
+    return new Promise(function (ok, ko) {
+      var r = new FileReader();
+      r.onload = function () { ok(String(r.result).split(",")[1] || ""); };
+      r.onerror = ko; r.readAsDataURL(blob);
+    });
+  }
+  function reduzirFoto(file) {
+    return new Promise(function (ok) {
+      var url = URL.createObjectURL(file), img = new Image();
+      img.onload = function () {
+        var e = Math.min(1, 1800 / Math.max(img.naturalWidth, img.naturalHeight));
+        var c = document.createElement("canvas");
+        c.width = Math.round(img.naturalWidth * e); c.height = Math.round(img.naturalHeight * e);
+        var ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, c.width, c.height);
+        ctx.drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+        c.toBlob(function (b) { ok(b); }, "image/jpeg", 0.82);
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); ok(null); };
+      img.src = url;
+    });
+  }
+  function prepararFicheiro(file) {
+    var p = file.type.indexOf("image/") === 0 ? reduzirFoto(file) : Promise.resolve(null);
+    return p.then(function (b) {
+      return lerBase64(b || file).then(function (data) {
+        return { name: b ? file.name.replace(/\.[^.]+$/, "") + ".jpg" : file.name, type: b ? "image/jpeg" : (file.type || "application/octet-stream"), data: data };
+      });
+    });
+  }
+
+  /* ---- Dados bancários da sala (botão Copiar e valores atualizados do servidor) ---- */
+  var payBox = form && form.querySelector(".pay-box");
+  if (payBox) {
+    payBox.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-copy]");
+      if (!b || !navigator.clipboard) return;
+      navigator.clipboard.writeText(payBox.querySelector('[data-pay="' + b.getAttribute("data-copy") + '"]').textContent).then(function () {
+        b.textContent = "Copiado ✓"; setTimeout(function () { b.textContent = "Copiar"; }, 2000);
+      }, function () {});
+    });
+    fetch("/api/reserva", { headers: { Accept: "application/json" } }).then(function (r) { return r.json(); }).then(function (j) {
+      if (j && j.ok) ["iban", "titular", "banco"].forEach(function (k) { if (j[k]) payBox.querySelector('[data-pay="' + k + '"]').textContent = j[k]; });
+    }).catch(function () {});
+  }
+
   /* ---- Envio ---- */
   if (form) {
     form.setAttribute("novalidate", "");
+    form.querySelectorAll("input, select, textarea").forEach(function (i) {
+      var clear = function () {
+        var f = i.closest(".field");
+        if (f && f.classList.contains("has-error") && i.checkValidity()) {
+          f.classList.remove("has-error"); var o = f.querySelector(".error-msg"); if (o) o.textContent = "";
+        }
+      };
+      i.addEventListener("input", clear); i.addEventListener("change", clear);
+    });
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var sel = selection();
@@ -207,7 +263,7 @@
         var bad = !i.checkValidity();
         f.classList.toggle("has-error", bad);
         var out = f.querySelector(".error-msg");
-        if (out) out.textContent = bad ? (i.validity.valueMissing ? "Este campo é obrigatório." : "Verifique o formato introduzido.") : "";
+        if (out) out.textContent = bad ? (i.type === "checkbox" ? "É necessário concordar para continuar." : i.validity.valueMissing ? "Este campo é obrigatório." : "Verifique o formato introduzido.") : "";
         if (bad && !firstBad) firstBad = i;
       });
       if (firstBad) { firstBad.focus(); return; }
@@ -217,34 +273,51 @@
       form.querySelector("#b-data").value = longDate(sel.date);
       form.querySelector("#b-horario").value = horario;
       form.querySelector("#b-valor").value = kz(sel.price);
-      fd.set("data", longDate(sel.date)); fd.set("horario", horario); fd.set("valor", kz(sel.price));
 
       var lines = [
-        "Olá! Gostaria de reservar a sala de formação.",
+        "Olá! Enviei pelo site um pedido de reserva da sala de formação.",
         "",
         "📅 Data: " + longDate(sel.date),
         "🕒 Horário: " + horario + " (" + String(sel.hours).replace(".", ",") + " h)",
         "💰 Valor estimado: " + kz(sel.price),
-        "👥 Participantes: " + fd.get("participantes"),
-        "📌 Tipo: " + fd.get("tipo"),
         "",
         "Nome: " + fd.get("nome"),
         fd.get("empresa") ? "Empresa: " + fd.get("empresa") : null,
-        "E-mail: " + fd.get("email"),
-        "Telefone: " + fd.get("telefone"),
-        fd.get("mensagem") ? "Mensagem: " + fd.get("mensagem") : null
+        "Telefone: " + fd.get("telefone")
       ].filter(function (l) { return l !== null; });
-      var url = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(lines.join("\n"));
+      var waUrl = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(lines.join("\n"));
 
-      // Cópia por e-mail (funciona quando o envio de e-mail estiver configurado na Vercel)
-      var data = {}; fd.forEach(function (v, k) { data[k] = v; }); data.pagina = document.title;
-      try { fetch("/api/contacto", { method: "POST", keepalive: true, headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) }).catch(function () {}); } catch (x) {}
-
-      var win = window.open(url, "_blank", "noopener");
-      if (!win) window.location.href = url;
+      var data = {};
+      fd.forEach(function (v, k) { if (typeof v === "string") data[k] = v; });
+      data.data = longDate(sel.date); data.horario = horario + " (" + String(sel.hours).replace(".", ",") + " h)"; data.valor = kz(sel.price);
       var status = form.querySelector(".form-status");
-      status.innerHTML = 'Pedido preparado no WhatsApp — <strong>envie a mensagem para concluir</strong>. Confirmaremos a disponibilidade com a maior brevidade. Se o WhatsApp não abriu, <a href="' + url + '" target="_blank" rel="noopener">clique aqui</a>.';
-      status.hidden = false; status.focus();
+      var btn = form.querySelector('[type="submit"]');
+      var btnText = btn.textContent;
+      btn.disabled = true; btn.textContent = "A enviar…"; status.hidden = true;
+
+      prepararFicheiro(form.querySelector("#r-docfile").files[0])
+        .then(function (f) {
+          if (f.data.length > 4000000) { var e2 = new Error("O ficheiro é demasiado grande (máximo 3 MB). Envie uma foto em vez de PDF, ou um PDF mais pequeno."); e2.local = true; throw e2; }
+          data.documento_ficheiro = f;
+          return fetch("/api/reserva", { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) });
+        })
+        .then(function (r) {
+          return r.json().catch(function () { return {}; }).then(function (j) {
+            if (!r.ok || !j.ok) { var e3 = new Error(j.error || ""); e3.local = r.status === 400 || r.status === 413; throw e3; }
+          });
+        })
+        .then(function () {
+          form.reset();
+          status.innerHTML = "<strong>Pedido de reserva enviado.</strong> Recebeu uma cópia no seu e-mail. Vamos confirmar a disponibilidade e responder brevemente. " +
+            'Se preferir, avise-nos também pelo <a href="' + waUrl + '" target="_blank" rel="noopener">WhatsApp</a>.';
+          status.hidden = false; status.focus();
+        })
+        .catch(function (err) {
+          status.textContent = err && err.local && err.message ? err.message :
+            "Não foi possível enviar o pedido. Tente novamente ou contacte-nos pelo WhatsApp/telefone +244 923 35 35 34.";
+          status.hidden = false; status.focus();
+        })
+        .then(function () { btn.disabled = false; btn.textContent = btnText; });
     });
   }
 
